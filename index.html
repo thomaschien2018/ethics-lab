@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>倫理學完整實驗室</title>
+    <title>倫理學讀書會互動實驗室</title>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -14,7 +14,7 @@
         .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
         .fade-in { animation: fadeIn 0.4s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .prompt-box { font-family: monospace; font-size: 0.75rem; line-height: 1.4; }
+        .theory-tag { font-size: 0.7rem; padding: 2px 8px; border-radius: 99px; background: rgba(99, 102, 241, 0.2); border: 1px solid rgba(99, 102, 241, 0.5); color: #a5b4fc; }
     </style>
 </head>
 <body>
@@ -26,27 +26,20 @@
 
         function LucideIcon({ name, color = "currentColor", className = "w-6 h-6" }) {
             const spanRef = useRef(null);
-            
             useEffect(() => {
                 const timer = setInterval(() => {
                     if (window.lucide && spanRef.current) {
                         clearInterval(timer);
                         const kebabName = name.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
-                        
                         spanRef.current.innerHTML = `<i data-lucide="${kebabName}"></i>`;
                         window.lucide.createIcons({
                             root: spanRef.current,
-                            attrs: {
-                                class: className,
-                                stroke: color,
-                                'stroke-width': 2
-                            }
+                            attrs: { class: className, stroke: color, 'stroke-width': 2 }
                         });
                     }
                 }, 100);
                 return () => clearInterval(timer);
             }, [name, color, className]);
-            
             return e('span', { ref: spanRef, className: 'inline-flex items-center justify-center' });
         }
 
@@ -60,36 +53,42 @@
             const experiments = {
                 trolley: { 
                     title: "電車問題", 
+                    tag: "規範倫理學：目的論",
                     icon: "Train", 
                     color: "#f87171", 
                     img: "https://i.ibb.co/Q7fssnLR/trolley.png"
                 },
                 fatman: { 
                     title: "胖子與天橋", 
+                    tag: "規範倫理學：義務論",
                     icon: "Hand", 
                     color: "#fb923c", 
                     img: "https://i.ibb.co/YFyxd89X/fatman.png"
                 },
                 transplant: { 
                     title: "器官捐贈", 
+                    tag: "規則 vs. 行為效益主義",
                     icon: "Activity", 
                     color: "#f472b6", 
                     img: "https://i.ibb.co/nNCMznHt/transplant.png"
                 },
                 machine: { 
                     title: "快樂機器", 
+                    tag: "價值論：享樂主義",
                     icon: "Brain", 
                     color: "#a78bfa", 
                     img: "https://i.ibb.co/7J8MXPnV/machine.png"
                 },
                 lifeboat: { 
                     title: "救生艇兩難", 
+                    tag: "社會正義：分配正義",
                     icon: "LifeBuoy", 
                     color: "#22d3ee", 
                     img: "https://i.ibb.co/bgbkn0Zx/lifeboat.png"
                 },
                 ring: { 
                     title: "蓋吉氏戒指", 
+                    tag: "倫理利己主義",
                     icon: "Gem", 
                     color: "#fbbf24", 
                     img: "https://i.ibb.co/8n7fN5zY/ring.png"
@@ -98,100 +97,100 @@
 
             const studyGuides = {
                 trolley: {
-                    dilemma: "一輛失控的電車正衝向 5 名工人。你可以拉下轉轍器讓它切換到備用軌道，但那裡有 1 名無辜的人。你的直覺會如何選擇？",
+                    dilemma: "失控電車衝向 5 人，轉轍器可切換至 1 人軌道。你拉嗎？",
                     options: [
                         {
-                            text: "拉下轉轍器 (犧牲 1 人，救下 5 人)",
-                            feedback: "你選擇了行動。這反映了你內心深處注重「整體結果」的傾向，認為只要能讓多數人存活，就算犧牲少數也是值得的。但這是否意味著生命是可以被計算與量化的？",
-                            perspective: { name: "對應理論：效益主義 (Utilitarianism)", desc: "主張道德的標準在於「最大多數人的最大幸福」。從這個視角出發，犧牲 1 人拯救 5 人是道德上正確的選擇，因為整體傷害降到了最低。" }
+                            text: "拉下轉轍器 (1死5生)",
+                            feedback: "你選擇了行動。這符合林火旺教授所提的「行為效益主義」，即針對單次、具體行為計算最大效益。你認為在這種極端事例中，結果的「好/壞」決定了行為的「對/錯」。",
+                            perspective: { name: "效益原則 (Utility Principle)", desc: "主張在所有可能選擇的行為中，當其整體結果能產生最大量的善時，就是對的行為。此處 5 大於 1，故行動被證成為正當。" }
                         },
                         {
-                            text: "什麼都不做 (不介入，讓 5 人死亡)",
-                            feedback: "你選擇了不介入。你堅守了「不親手殺害無辜者」的底線，認為我們無權把別人當作工具來決定生死。但袖手旁觀導致了更嚴重的死亡，難道我們真的沒有責任嗎？",
-                            perspective: { name: "對應理論：義務論 (Deontology)", desc: "康德強調「人是目的，而非手段」。如果我們拉下轉轍器，就等於把那 1 個無辜的人當成了拯救 5 人的「工具」，這侵犯了他的基本權利。" }
+                            text: "什麼都不做 (5死1生)",
+                            feedback: "你堅守了底線。這體現了「義務論」的立場：有些行為（如殺害無辜者）本質就是錯誤的，不論其結果能拯救多少人。你拒絕將人當作純粹的計數單位。",
+                            perspective: { name: "義務論 (Deontology)", desc: "由康德提出，主張一個行為的對錯不由結果決定，而是由行為本身具有的性質決定。義務是尊重法則的必然行為，不容許隨意轉嫁傷害。" }
                         }
                     ],
-                    questions: "多數人的生命真的大於少數人的生命嗎？「主動殺人」與「被動放任死亡」在道德上有區別嗎？"
+                    questions: "「主動殺害一人」與「任由五人死亡」，在道德判斷上有本質的區別嗎？"
                 },
                 fatman: {
-                    dilemma: "推下一名巨大的胖子可以擋住電車，救下軌道上的 5 人。你會為了「救多數人」而親手奪走一條命嗎？",
+                    dilemma: "在天橋推下一名胖子擋住電車可救下 5 人。你會動手嗎？",
                     options: [
                         {
-                            text: "推下胖子 (親手殺 1 人救 5 人)",
-                            feedback: "你做出了極其沉重的決定。你貫徹了「數量至上」的邏輯，認為只要結果是救下多數人，親手推人與拉搖桿沒有本質區別。但這份「親手殺人」的冷酷，真的能輕易忽視嗎？",
-                            perspective: { name: "對應理論：極端效益主義", desc: "完全以結果論英雄。不管手段多麼血腥直接，只要最終獲救的人數大於死亡人數，就是道德上應該做的事。" }
+                            text: "推下胖子 (殺一救五)",
+                            feedback: "你採取了極端的結果論立場。在林火旺著作中，這被視為對效益原則的極致執行。然而，這也引發了「消極責任」的質疑：你是否承擔了本不該由你承擔的負擔？",
+                            perspective: { name: "心理利己主義的挑戰", desc: "雖然此處是利他行為，但反思動機：你是為了減少自己的痛苦，還是真的為了最大效益？若只看結果，此舉雖有效益，卻犧牲了人格完整性。" }
                         },
                         {
-                            text: "絕對不推 (無法親手殺人)",
-                            feedback: "你的良知阻止了你。多數人在電車問題會拉搖桿，卻在這裡停手了。因為你的直覺告訴你，主動把一個原本安全的人當作肉墊，跨越了某種極度危險的道德紅線。",
-                            perspective: { name: "對應理論：雙重效應原則 (Double Effect)", desc: "拉搖桿時，1人的死是拯救5人的「副作用」；但推下胖子時，你是「蓄意」利用他的死作為手段。倫理學認為，蓄意傷害無辜者作為手段是不被允許的。" }
+                            text: "絕對不推 (捍衛生命尊嚴)",
+                            feedback: "你意識到「手段」與「副作用」的區別。這與倫理學中的「雙重效應原則」契合：拉轉轍器是為救人而產生的不幸副作用，但推人則是直接將人命當作達成目的的「工具」。",
+                            perspective: { name: "定言令式：目的原則", desc: "康德強調：「人是目的，而非手段」。推下胖子直接將其視為「工具」，這在定言令式的最高準則下是絕對被禁止的。" }
                         }
                     ],
-                    questions: "為什麼同樣是「犧牲 1 人救 5 人」，我們對拉搖桿和推胖子的感受差這麼多？道德是建立在邏輯計算上，還是建立在人類的情感與直覺上？"
+                    questions: "道德是建立在冷靜的數學邏輯上，還是建立在人類必須遵守的根本義務上？"
                 },
                 transplant: {
-                    dilemma: "你是醫生。使用達文西手術手臂從 1 名健康的人身上強行拆分器官，可以救活 5 名命危的病人。你會執行這項手術嗎？",
+                    dilemma: "醫生強行拆分 1 名健康者的器官救活 5 人。這符合道德嗎？",
                     options: [
                         {
-                            text: "進行手術 (強制犧牲 1 人救 5 人)",
-                            feedback: "你在數字邏輯上走到了極致。從純粹的效益來看，5 個活著的人確實大於 1 個。但你是否意識到，這項決定將徹底摧毀社會中所有人對彼此、對醫療系統的信任？",
-                            perspective: { name: "對應理論：行為效益主義的盲點", desc: "如果只看「這次」的結果，殺1救5看似效益最大。但這忽視了人類社會依賴「信任」與「人權安全感」才能運作的根本前提。" }
+                            text: "執行手術 (極大化單次效益)",
+                            feedback: "這是「行為效益主義」在現實中最令人不安的運用。你認為在數字面前，個人的犧牲是可以接受的。但你忽略了林火旺教授提到的「社會信任系統」的崩潰價值。",
+                            perspective: { name: "行為效益主義的困境", desc: "過度關注個案結果。雖然單次能救 5 人，但若所有人知道去醫院可能被拆分器官，社會整體的安全價值將歸零。" }
                         },
                         {
-                            text: "拒絕手術 (絕不傷害健康者)",
-                            feedback: "你捍衛了醫生的誓言與個人的基本人權。你明白，有些底線一旦突破，就算救了再多人，社會也會淪為隨時可能被犧牲的人間煉獄。",
-                            perspective: { name: "對應理論：權利論與規則效益主義", desc: "每個人擁有不可剝奪的身體自主權。如果社會形成「醫生可以隨便殺健康人取器官」的規則，沒人敢去醫院，長期整體的社會效益反而會崩潰。" }
+                            text: "拒絕手術 (維護制度正義)",
+                            feedback: "你選擇了「規則效益主義」。你明白：我們應遵循一套能產生最大整體效益的「規則」（如：保護病人權益），而非僅僅看當次行為。維持醫療體系的信任，長遠看來對社會的善更有幫助。",
+                            perspective: { name: "規則效益主義 (Rule Utilitarianism)", desc: "效益原則是用來檢驗「道德規則」而非「單次行為」。守護個人身體自主權是一條能達成社會長遠最大幸福的規則。" }
                         }
                     ],
-                    questions: "如果效益主義在電車問題看起來很合理，為什麼在醫院場景卻顯得如此荒謬與恐怖？「人權」是不是我們對抗極端功利計算的最後防線？"
+                    questions: "如果為了「大多數人的最大幸福」可以隨時犧牲你，這樣的社會是你所渴望的嗎？"
                 },
                 machine: {
-                    dilemma: "只要插上電極，你能體驗到任何想要的極致快樂，且大腦完全不知那是虛擬的。你會選擇永遠進入機器嗎？",
+                    dilemma: "插上電極即能獲得永遠的極致快樂，你會選擇進入機器嗎？",
                     options: [
                         {
-                            text: "進入機器 (享受永遠的極致快樂)",
-                            feedback: "你選擇了終極的幸福。既然所有的感知、記憶與情感在腦中都是一樣的真實，那麼逃離充滿苦難的現實，擁抱完美的虛擬生活，似乎是再理智不過的選擇。",
-                            perspective: { name: "對應理論：享樂主義 (Hedonism)", desc: "認為「快樂是人生唯一的內在價值，痛苦是唯一的惡」。從這個角度看，進入快樂機器絕對是最理性的選擇，拒絕只是因為不理性的心理障礙。" }
+                            text: "進入機器 (追求內在價值)",
+                            feedback: "你認同「享樂主義」：快樂是唯一具有內在價值的事物。根據邊沁的官能論，只要感官上的快樂足夠，虛擬與否並不重要。這是一種最純粹的「價值一元論」。",
+                            perspective: { name: "享樂主義：滿足論 (Satisfactionism)", desc: "快樂不只是感官，還包含精神。若機器能模擬心靈滿足，對享樂主義者來說，這就是人生的終極目標。" }
                         },
                         {
-                            text: "留在現實 (面對真實的平庸與痛苦)",
-                            feedback: "你拒絕了虛假的完美。你認為人生的價值不僅僅是「感覺良好」，而在於「真實地活過」、去愛、去受傷，去與這個真實的世界產生無可取代的連結。",
-                            perspective: { name: "對應理論：客觀清單理論 (Objective List Theory)", desc: "哲學家諾齊克用此思想實驗反駁享樂主義。他指出我們不僅在乎「感受」，更在乎「真實地去做某些事」、「成為某種特定的人」以及「與現實的真實連結」。" }
+                            text: "留在現實 (追求真實價值)",
+                            feedback: "你認為人生有比「快樂」更重要的內在價值。林火旺提到諾齊克的反思：我們在乎「真實地做某些事」以及「成為某種特定的人」。這反映了你的「非享樂主義」傾向。",
+                            perspective: { name: "價值多元論 (Pluralism)", desc: "認為除了快樂，知識、自由、真實性也具有內在價值。真實的痛苦有時比虛擬的快樂更能定義「我是誰」。" }
                         }
                     ],
-                    questions: "如果感受是完全真實的，虛擬的快樂與現實的痛苦，你為什麼會這樣選？人生的意義難道真的不僅僅是「追求純粹的快樂」嗎？"
+                    questions: "「寧願是一個不滿足的人，也不願意是一隻滿足的豬。」穆勒的這句話如何在你心中產生共鳴？"
                 },
                 lifeboat: {
-                    dilemma: "最後一個救生艇位置，你要給 80 歲的天才科學家、5 歲孤兒，還是懷孕的母親？",
+                    dilemma: "最後一位救生艇位子，要給 80 歲天才、5 歲孤兒，還是孕婦？",
                     options: [
                         {
-                            text: "由我來挑選 (基於年齡、潛力或弱勢)",
-                            feedback: "你承擔起了上帝的角色。你試圖透過某些標準（例如誰更需要、誰對社會更有貢獻）來決定誰有資格活下去。但這也意味著你認定了生命有「高低貴賤」之分。",
-                            perspective: { name: "對應理論：社會契約與正義論", desc: "羅爾斯主張在「無知之幕」後做決定：假設你不知道自己是三者中的哪一個，你會希望制定什麼救援規則？通常人們會傾向保護最弱勢的群體。" }
+                            text: "基於價值排序挑選",
+                            feedback: "你試圖對生命進行「價值觀能」的測量。這在《羅爾斯正義論》中是困難的，因為任何標準都可能隱含偏見。你認為生命的價值可以透過未來的潛力或社會貢獻來權衡。",
+                            perspective: { name: "分配正義的難題", desc: "效益主義只在意「效益總和」，不關心「如何分配」。這也暴露了目的論在面對正義公平時的脆弱性。" }
                         },
                         {
-                            text: "抽籤決定 (交給機率與運氣)",
-                            feedback: "你拒絕去衡量生命的重量。你認為任何人都沒有資格評判誰的生命更有價值。透過抽籤，你將所有生命放在了絕對平等的基準線上。",
-                            perspective: { name: "對應理論：生命平權觀點 (Egalitarianism)", desc: "每一條生命都是無價且平等的，不能用「年齡」或「社會貢獻」來量化。在極端情況下，唯一的道德作法是讓機率來決定，維持對所有生命的絕對尊重。" }
+                            text: "抽籤決定 (絕對平等)",
+                            feedback: "這符合「生命平權觀點」。你認為在極端情況下，唯一的道德方式是讓機率決定，這維持了對所有生命絕對平等的尊重，符合「無知之幕」背後的公平性。",
+                            perspective: { name: "羅爾斯：無知之幕 (Veil of Ignorance)", desc: "假設你不知道自己是誰，你制定的規則才會最公平。抽籤保護了所有人在未知身份下的平權機率。" }
                         }
                     ],
-                    questions: "生命的價值真的有高低之分嗎？如果我們今天用「社會貢獻」來決定誰能上救生艇，這種邏輯在日常社會中會導致什麼可怕的後果？"
+                    questions: "生命的重量可以被比較嗎？如果我們承認生命價值有高低，人類社會將走向何方？"
                 },
                 ring: {
-                    dilemma: "如果你戴上隱形戒指做任何事都不會被發現或制裁，你還會堅持做一個道德的人嗎？",
+                    dilemma: "若擁有隱身戒指且不受懲罰，你還會堅持做一個道德的人嗎？",
                     options: [
                         {
-                            text: "會稍微放縱 (為了私利做些壞事)",
-                            feedback: "你展現了非常誠實的人性。當失去了外在的監督與懲罰，多數人心中的道德枷鎖就會鬆動。這暗示了我們的許多道德行為，可能只是出於對社會制裁的恐懼。",
-                            perspective: { name: "對應理論：利己主義與社會契約", desc: "哲學家提出：正義只是弱者為了避免受害而制定的契約。如果人擁有絕對的力量（如隱形），必然會選擇滿足私慾。道德只是外在的枷鎖。" }
+                            text: "會為了私利行動",
+                            feedback: "這觸及了格勞孔的論證：道德只是弱者為了避免受害而制定的契約。這屬於「心理利己主義」範疇，認為人類行為的終極目標總是自我關懷。",
+                            perspective: { name: "社會契約與利己主義", desc: "認為正義是出於對懲罰的恐懼。如果行為能帶來私利且無風險，追求利益就是理性的表現。" }
                         },
                         {
-                            text: "絕不改變 (依然堅持做個有道德的人)",
-                            feedback: "你擁有極高的自律與內在信念。你認為道德不是做給別人看的，而是為了對得起自己的良心。對你而言，做壞事本身就會破壞你內在的平靜與人格。",
-                            perspective: { name: "對應理論：德行論 (Virtue Ethics)", desc: "亞里斯多德認為，做一個有道德的人是為了達到「靈魂的健康」與「人生的繁榮」。即使沒有人看見，做壞事也會腐蝕自己的品格，失去真正的幸福。" }
+                            text: "依然堅持道德",
+                            feedback: "你實踐了亞里斯多德的「德行論」。你認為道德是為了「靈魂的健康」與「品格的繁榮」。即便無人看見，損害德行即是損害自己獲得真實幸福（Eudaimonia）的能力。",
+                            perspective: { name: "德行倫理學 (Virtue Ethics)", desc: "核心問題不在「我該做什麼行為」，而在「我要成為什麼樣的人」。建立穩定的人格特質（德行），就是最高的理性目標。" }
                         }
                     ],
-                    questions: "道德究竟是因為「害怕被懲罰」而產生的社會妥協，還是人類發自內心對「良善與內在平靜」的純粹追求？"
+                    questions: "道德是外在的枷鎖，還是人內在靈魂的健全表現？"
                 }
             };
 
@@ -209,19 +208,19 @@
                         e(LucideIcon, { name: 'ArrowLeft', className: 'w-4 h-4' }), " 返回大廳"
                     ),
                     e('div', { className: 'glass p-8 md:p-12 rounded-3xl border-l-4 shadow-2xl', style: { borderColor: exp.color } },
-                        e('h2', { className: 'text-3xl md:text-4xl font-bold mb-8 flex items-center gap-4' }, 
-                            exp.title,
-                            e(LucideIcon, { name: exp.icon, color: exp.color, className: 'w-8 h-8' })
+                        e('div', { className: 'flex justify-between items-start mb-6' },
+                            e('div', null,
+                                e('span', { className: 'theory-tag mb-2 inline-block' }, exp.tag),
+                                e('h2', { className: 'text-3xl md:text-4xl font-bold flex items-center gap-4' }, exp.title)
+                            ),
+                            e(LucideIcon, { name: exp.icon, color: exp.color, className: 'w-10 h-10' })
                         ),
                         step === 0 ? e('div', null,
                             e('div', { className: 'p-8 bg-slate-900/60 rounded-2xl border border-slate-700 mb-10' },
-                                e('h4', { className: 'text-indigo-400 font-bold mb-4 flex items-center gap-2 tracking-wide' }, 
-                                    e(LucideIcon, {name:'BookOpen', className:'w-5 h-5'}), "情境重現"
+                                e('h4', { className: 'text-indigo-400 font-bold mb-4 flex items-center gap-2' }, 
+                                    e(LucideIcon, {name:'BookOpen', className:'w-5 h-5'}), "讀書會導讀：情境重現"
                                 ),
                                 e('p', { className: 'text-xl text-slate-200 leading-relaxed' }, guide.dilemma)
-                            ),
-                            e('h4', { className: 'text-slate-400 font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2 mb-6' }, 
-                                "請現場民眾做出選擇"
                             ),
                             e('div', { className: 'grid grid-cols-1 md:grid-cols-2 gap-4' },
                                 guide.options.map((opt, idx) => 
@@ -235,38 +234,24 @@
                                 )
                             )
                         ) : e('div', { className: 'fade-in space-y-8' },
-                            e('div', { className: 'p-8 bg-indigo-900/20 rounded-2xl border border-indigo-500/50 shadow-inner relative overflow-hidden' },
-                                e('div', { className: 'absolute top-0 right-0 p-4 opacity-10 pointer-events-none' }, 
-                                    e(LucideIcon, { name: 'CheckCircle', className: 'w-24 h-24 text-indigo-300' })
-                                ),
+                            e('div', { className: 'p-8 bg-indigo-900/20 rounded-2xl border border-indigo-500/50 shadow-inner' },
                                 e('h4', { className: 'text-indigo-300 font-bold mb-4 flex items-center gap-2 text-lg' }, 
-                                    e(LucideIcon, {name:'User', className:'w-5 h-5'}), "你的選擇與反思"
+                                    e(LucideIcon, {name:'User', className:'w-5 h-5'}), "你的選擇與反思 (哲學剖析)"
                                 ),
-                                e('p', { className: 'text-xl text-white leading-relaxed font-medium mb-6 relative z-10' }, guide.options[selectedChoice].feedback),
-                                e('div', { className: 'p-5 bg-slate-900/80 rounded-xl border-l-4 border-indigo-400 relative z-10' },
+                                e('p', { className: 'text-xl text-white leading-relaxed font-medium mb-6' }, guide.options[selectedChoice].feedback),
+                                e('div', { className: 'p-5 bg-slate-900/80 rounded-xl border-l-4 border-indigo-400' },
                                     e('h5', { className: 'text-indigo-300 font-bold text-lg mb-2' }, guide.options[selectedChoice].perspective.name),
                                     e('p', { className: 'text-slate-300 leading-relaxed' }, guide.options[selectedChoice].perspective.desc)
                                 )
                             ),
                             e('div', { className: 'p-8 bg-slate-900/60 rounded-2xl border-l-4 border-blue-500 shadow-inner' },
                                 e('h4', { className: 'text-blue-400 font-bold mb-4 flex items-center gap-2 text-lg' }, 
-                                    e(LucideIcon, {name:'MessageSquare', className:'w-5 h-5'}), "小組討論：核心提問"
+                                    e(LucideIcon, {name:'MessageSquare', className:'w-5 h-5'}), "導讀員提問：深度討論"
                                 ),
                                 e('p', { className: 'text-xl text-white leading-relaxed font-bold' }, guide.questions)
                             ),
-                            e('div', { className: 'space-y-4' },
-                                e('h4', { className: 'text-slate-400 font-bold uppercase tracking-wider text-sm flex items-center gap-2 mb-4' }, 
-                                    e(LucideIcon, {name:'Scale', className:'w-4 h-4'}), "另一種倫理學視角 (供辯論參考)"
-                                ),
-                                e('div', { className: 'p-6 bg-slate-900/40 rounded-xl border-l-4 border-slate-600' },
-                                    e('h5', { className: 'text-slate-400 font-bold text-lg mb-2' }, guide.options[1 - selectedChoice].perspective.name),
-                                    e('p', { className: 'text-slate-500 leading-relaxed text-md' }, guide.options[1 - selectedChoice].perspective.desc)
-                                )
-                            ),
                             e('div', { className: 'pt-6 border-t border-slate-800' },
-                                e('button', { onClick: goHome, className: 'w-full py-4 bg-slate-800 hover:bg-slate-700 rounded-xl font-bold text-white transition-colors flex justify-center items-center gap-2' }, 
-                                    "完成探討，返回大廳"
-                                )
+                                e('button', { onClick: goHome, className: 'w-full py-4 bg-slate-800 hover:bg-slate-700 rounded-xl font-bold text-white transition-colors' }, "完成討論，返回大廳")
                             )
                         )
                     )
@@ -275,35 +260,50 @@
 
             return e('div', { className: 'max-w-5xl mx-auto py-12 px-6 fade-in' },
                 e('div', { className: 'text-center mb-16' },
-                    e('h1', { className: 'text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-500 bg-clip-text text-transparent' }, "倫理學完整實驗大廳"),
-                    e('p', { className: 'text-slate-400 text-xl font-medium' }, "歡迎參加讀書會，這是為大家準備的 6 個哲學試煉。")
+                    e('h1', { className: 'text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-500 bg-clip-text text-transparent' }, "倫理學讀書會實驗室"),
+                    e('p', { className: 'text-slate-400 text-xl font-medium max-w-2xl mx-auto leading-relaxed' }, "透過林火旺教授的思辨架構，我們在此對日常習而不察的道德規則提出質疑。")
                 ),
                 
+                // 學習導讀區
+                e('div', { className: 'grid grid-cols-1 md:grid-cols-3 gap-6 mb-16' },
+                    [
+                        { title: '什麼是倫理學？', content: '對背景預設進行批判評估，透過理性能力為道德處境找解答。', icon: 'Search' },
+                        { title: '價值的選擇', content: '道德衝突源頭即價值衝突。必須先釐清價值，才能進行判斷。', icon: 'Scale' },
+                        { title: '如何生活？', content: '不只是研究理論，而是為了在抉擇時能比較輕鬆且篤定。', icon: 'Sun' }
+                    ].map((item, idx) => e('div', { key: idx, className: 'glass p-6 rounded-2xl border-b-2 border-indigo-500/50' },
+                        e('div', { className: 'flex items-center gap-3 mb-3 text-indigo-400 font-bold' }, 
+                            e(LucideIcon, { name: item.icon, className: 'w-5 h-5' }), item.title
+                        ),
+                        e('p', { className: 'text-slate-400 text-sm leading-relaxed' }, item.content)
+                    ))
+                ),
+
+                // 卡片區塊
                 e('div', { className: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20' },
                     Object.entries(experiments).map(([key, exp]) => 
                         e('div', { key, onClick: () => setActiveFlow(key), className: 'glass rounded-2xl overflow-hidden cursor-pointer hover:scale-[1.03] hover:border-slate-500 transition-all group' },
                             e('div', { className: 'h-48 relative overflow-hidden' },
-                                e('img', { src: exp.img, className: 'h-full w-full object-cover opacity-50 group-hover:opacity-80 transition-all duration-700 group-hover:scale-110', referrerPolicy: 'no-referrer' })
+                                e('img', { src: exp.img, className: 'h-full w-full object-cover opacity-50 group-hover:opacity-80 transition-all duration-700 group-hover:scale-110', referrerPolicy: 'no-referrer' }),
+                                e('div', { className: 'absolute top-3 left-3' }, e('span', { className: 'theory-tag' }, exp.tag))
                             ),
-                            e('div', { className: 'p-6' },
-                                e('div', { className: 'flex justify-between items-center' },
-                                    e('h3', { className: 'text-xl font-bold text-white' }, exp.title),
-                                    e(LucideIcon, { name: exp.icon, color: exp.color })
-                                )
+                            e('div', { className: 'p-6 flex justify-between items-center' },
+                                e('h3', { className: 'text-xl font-bold text-white' }, exp.title),
+                                e(LucideIcon, { name: exp.icon, color: exp.color })
                             )
                         )
                     )
                 ),
 
-                e('div', { className: 'glass p-10 md:p-12 rounded-3xl border-t-4 border-indigo-500 shadow-2xl relative overflow-hidden fade-in' },
+                // 結論區塊
+                e('div', { className: 'glass p-10 md:p-12 rounded-3xl border-t-4 border-indigo-500 shadow-2xl relative overflow-hidden fade-in mb-20' },
                     e('div', { className: 'absolute top-0 right-0 p-8 opacity-10 pointer-events-none' }, 
                         e(LucideIcon, { name: 'BookOpen', className: 'w-40 h-40' })
                     ),
                     e('h2', { className: 'text-3xl md:text-4xl font-bold mb-8 text-indigo-400 flex items-center gap-4' }, 
-                        "所以，人應該如何活？"
+                        "所以，大家應該如何活？"
                     ),
                     !isSubmitted ? e('div', { className: 'relative z-10' },
-                        e('p', { className: 'text-lg text-slate-300 mb-6' }, "經歷了上述的哲學試煉，面對生命的重量與道德的兩難，你認為什麼才是最重要的價值？請在下方留下你的反思："),
+                        e('p', { className: 'text-lg text-slate-300 mb-6' }, "經歷了這場倫理學的洗禮，面對價值的衝突與人性的考驗，此刻的你認為什麼才是最重要的？請留下讀書會最後的反思："),
                         e('textarea', {
                             value: reflection,
                             onChange: (e) => setReflection(e.target.value),
@@ -320,14 +320,14 @@
                         e('div', { className: 'p-8 bg-slate-900/60 rounded-2xl border-l-4 border-indigo-500 shadow-inner my-6' },
                             e('p', { className: 'text-xl text-slate-200 italic' }, `「${reflection}」`)
                         ),
-                        e('p', null, "你剛才所寫下的，便是屬於你的價值判斷。"),
-                        e('p', null, "我們必須要先了解生命中什麼是最重要的價值，才可以選擇自己的道德理論。有了道德的理論，人生才有辦法依照這個理論實踐。"),
+                        e('p', null, "這份文字，記錄了你如何從直覺邁向理性的批判。"),
+                        e('p', null, "如同林火旺教授所言，倫理學是選擇價值理論的科學。我們必須先了解生命中最重要的價值（終點），才能確定道德判斷的路徑（路徑）。"),
                         e('div', { className: 'p-6 bg-slate-900/40 rounded-2xl border-l-4 border-blue-500 my-4' },
                             e('p', { className: 'text-slate-400' }, 
-                                "比方說，如果知道「生命大於承諾」，那在我們和別人赴約的時候，路上有人需要幫助，你可能就會捨棄準時的承諾去幫助路人。這個時候，你就是做了一個價值的決定，避免了道德的衝突。"
+                                "當我們釐清了「生命價值高於承諾」或「德行高於利益」，在未來的抉擇處境中，我們就不再是被習俗左右的旁觀者，而是基於理性理論實踐的主動者。"
                             )
                         ),
-                        e('p', { className: 'text-indigo-300 font-bold' }, "而倫理學就是選擇價值理論的科學。有了自己的理論，在做很多決策的時候，就可以比較輕鬆且篤定。")
+                        e('p', { className: 'text-indigo-300 font-bold' }, "願這份思辨的種子，讓大家在面對人生無數分岔路時，能行得比較輕鬆且篤定。")
                     )
                 )
             );
