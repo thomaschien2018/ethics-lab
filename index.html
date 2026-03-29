@@ -14,41 +14,51 @@
         body { 
             font-family: 'PingFang TC', 'Heiti TC', 'Noto Sans TC', sans-serif; 
             background-color: #080c17; 
-            color: #f1f5f9; 
+            color: white; 
             margin: 0; 
-            -webkit-tap-highlight-color: transparent; /* 移除手機點擊藍色陰影 */
-            word-break: break-word;
+            -webkit-tap-highlight-color: transparent; 
         }
-
-        .glass { 
-            background: rgba(16, 23, 42, 0.65); 
-            backdrop-filter: blur(16px); 
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08); 
-        }
-
-        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* 導覽按鈕動畫 */
-        .nav-btn { position: relative; transition: all 0.3s; }
+        .glass { 
+            background: rgba(16, 23, 42, 0.6); 
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+        }
+        
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* 導覽列 */
+        .nav-btn { position: relative; transition: all 0.3s; padding-bottom: 0.5rem; }
         .nav-btn.active { color: #818cf8; }
-        .nav-btn.active::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 100%; height: 3px; background: #818cf8; border-radius: 99px; }
+        .nav-btn.active::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 3px; background: #818cf8; border-radius: 2px; }
 
-        /* 行動端輸入框字體修正 */
+        /* 實驗室標籤 */
+        .theory-tag { font-size: 0.7rem; padding: 2px 8px; border-radius: 99px; background: rgba(99, 102, 241, 0.2); border: 1px solid rgba(99, 102, 241, 0.5); color: #a5b4fc; }
+
+        /* 防止 iOS 縮放輸入框 */
         textarea { font-size: 16px !important; }
 
-        /* === PDF 文本視覺優化 === */
-        .pdf-container { color: #cbd5e1; line-height: 1.8; letter-spacing: 0.03em; }
-        .pdf-title { font-size: 2rem; font-weight: 800; text-align: center; margin-bottom: 2.5rem; background: linear-gradient(to right, #818cf8, #c084fc); -webkit-background-clip: text; color: transparent; }
-        .pdf-h1 { font-size: 1.6rem; font-weight: 800; color: #818cf8; border-bottom: 2px solid #312e81; padding-bottom: 0.5rem; margin: 3rem 0 1.5rem; }
-        .pdf-h2 { font-size: 1.3rem; font-weight: 700; color: #f8fafc; border-left: 5px solid #4f46e5; padding-left: 1rem; margin: 2rem 0 1.25rem; background: linear-gradient(to right, rgba(79,70,229,0.1), transparent); }
-        .pdf-quote { background: rgba(30, 41, 59, 0.5); border-radius: 0.75rem; padding: 1.2rem; margin: 1.5rem 0; border-left: 4px solid #818cf8; font-style: italic; color: #94a3b8; }
+        /* === PDF 文本專屬優化排版 === */
+        .pdf-container { color: #cbd5e1; line-height: 1.8; letter-spacing: 0.05em; text-align: justify; padding-bottom: 5rem; }
+        .pdf-title { font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 3rem; background: linear-gradient(to right, #818cf8, #c084fc); -webkit-background-clip: text; color: transparent; }
+        .pdf-h1 { font-size: 2.2rem; font-weight: 800; color: #818cf8; border-bottom: 2px solid #312e81; padding-bottom: 0.5rem; margin: 4rem 0 2rem; }
+        .pdf-h2 { font-size: 1.7rem; font-weight: 700; color: #f8fafc; border-left: 5px solid #4f46e5; padding-left: 1rem; margin: 3rem 0 1.5rem; background: linear-gradient(to right, rgba(79,70,229,0.15), transparent); padding-top: 0.3rem; padding-bottom: 0.3rem; }
+        .pdf-h3 { font-size: 1.4rem; font-weight: 700; color: #a5b4fc; margin: 2rem 0 1rem; display: flex; align-items: center; }
+        .pdf-h3::before { content: '❖'; margin-right: 0.5rem; color: #6366f1; font-size: 1.1rem; }
+        .pdf-h4 { font-size: 1.15rem; font-weight: 700; color: #e2e8f0; margin: 1.5rem 0 0.8rem; }
+        .pdf-p0 { margin-bottom: 1rem; color: #cbd5e1; }
+        .pdf-p1 { padding-left: 1.5rem; margin-bottom: 0.8rem; color: #e2e8f0; font-weight: 500; }
+        .pdf-p2 { padding-left: 3.5rem; margin-bottom: 0.8rem; color: #cbd5e1; }
+        .pdf-p3 { padding-left: 5.5rem; margin-bottom: 0.6rem; color: #94a3b8; font-size: 0.95rem; }
+        .pdf-quote { background: rgba(30, 41, 59, 0.6); border-radius: 0.5rem; padding: 1.2rem 1.5rem; margin: 1.5rem 0 1.5rem 1.5rem; border-left: 4px solid #818cf8; font-style: italic; color: #94a3b8; }
         
-        .pdf-table-wrapper { overflow-x: auto; margin: 1.5rem 0; border-radius: 1rem; border: 1px solid rgba(255,255,255,0.05); }
-        .pdf-table { width: 100%; border-collapse: collapse; min-width: 550px; }
-        .pdf-table th { background: rgba(30, 41, 59, 0.9); color: #818cf8; padding: 1rem; text-align: left; border-bottom: 2px solid #4f46e5; }
-        .pdf-table td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: top; }
+        .pdf-table-wrapper { overflow-x: auto; margin: 2rem 0; border-radius: 1rem; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .pdf-table { width: 100%; border-collapse: collapse; background: rgba(15, 23, 42, 0.6); min-width: 600px; }
+        .pdf-table th { background: rgba(30, 41, 59, 0.9); color: #818cf8; padding: 1.2rem 1rem; text-align: left; font-weight: 700; border-bottom: 2px solid #4f46e5; }
+        .pdf-table td { padding: 1.2rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: #cbd5e1; vertical-align: top; }
+        .pdf-table tr:hover { background: rgba(255,255,255,0.02); }
     </style>
 </head>
 <body>
@@ -75,42 +85,238 @@
         }
 
         // ==========================================
-        // 經典導讀內容引擎
+        // PDF 文本資料引擎
         // ==========================================
         const pdfContentLines = [
             "# 【倫理學】 - 林火旺著",
             "h1 壹、倫理學是什麼",
             "h2 〔一〕導論",
-            "p1 1. 倫理學是以哲學方法研究道德的一門學問。",
-            "p1 2. 哲學思考是透過理性能力，不單跟隨習俗，而是透過批判為道德處境找到解答。",
-            "q 「倫理學探討一般習而不察的道德判斷和道德規則，甚至對其假設提出質疑。」",
+            "h3 一、道德和道德哲學的意義",
+            "h4 (一)倫理學的意義",
+            "p1 1. 倫理學又稱為道德哲學，是以哲學方法研究道德的一門學問。",
+            "p1 2. 由於我們日常思考和信念是所在社會背景文化內化的結果，所以哲學研究會對背景預設不斷進行批判評估和反省，哲學思考則是透過人類理性的能力，不單純跟隨習俗或傳統的道德標準，而是透過理性批判，為道德處境找到解答。",
+            "p1 3. 因此倫理學就是從具體的事例，深入探究其抽象的理論假設，以這樣的方法研究道德問題。換句話說，倫理學就是將哲學的批判、分析的研究方法應用到倫理道德領域，探討我們日常生活中一般習而不察的道德判斷和道德規則的學問，甚至對道德規則背後的假設提出質疑。",
+            "h4 (二)道德和其他規範性主題的比較",
+            "p1 1. 倫理(ethics)與道德(morality)的區別：",
+            "p2 (1) 有認為倫理是指個人的品格，道德是指人與人之間的關係。",
+            "p2 (2) 有認為倫理是指所有生活面向的指引，道德是描述行為選擇的對錯。",
+            "p2 (3) 最普遍，則是認為倫理和道德是一樣的，是同義詞(作者採此說)。",
+            "p1 2. 倫理學關心的主題：並非事實問題，而是價值或價值判斷的問題。道德判斷不是對實際發生行為的事實描述，而是對行為實踐構成一種規定和要求，藉以鼓勵某些行為或禁止某些行為。",
+            "p1 3. 道德具有指引和規範行為的特點，下面的觀念也有，但仍有區別：",
+            "p2 (1) 社交禮儀：只是社會習慣、習俗，目的僅在使社會運作順暢，但未觸及、也不關心行為的核心本質。",
+            "p2 (2) 宗教：道德規則和規定不必基於神或天，而是來自理性的基礎。因若基於宗教恪守道德，則對於不具相同宗教者欠缺說服力，較難成為社會共同接受的行為指導。",
+            "p2 (3) 法律：合法的行為未必符合道德，法律無法涵蓋某些面向(比方說謊未必會違法)，法律禁止的行為未必不道德(比方車子要走右線，禁止開左邊)，違反法律會受公權力制裁，但違反道德只會受到社會大眾無聲譴責。故而，法律仍無法取代道德。只能將嚴重道德缺失行為定為法律強制社會成員不違反。",
+            "h4 (三)道德判斷和非道德判斷的區別",
+            "p0 對此區別，有不同主張：",
+            "p1 1. 主張一：道德判斷是一種包含價值語詞的判斷(如墮胎是錯的/應該的、邪惡的)，非道德判斷則不具有任何價值語詞(如虐待兒童是無趣的)。",
+            "q → 批：有價值語詞，但未必涉及道德判斷(如：這是一臺好車)。",
+            "p1 2. 主張二：依議題來區分，涉及某些議題的陳述就是道德判斷(如墮胎、安樂死、公民權利)。",
+            "q → 批：對這些議題的陳述也未必涉及道德判斷(如墮胎在某些地方合法/支持度高)。",
+            "p1 3. 主張三：道德判斷依社會而異，某個社會認為最重要的風俗習慣就會變成這個社會的法律，次重要的就會變成道德，最不重要的就變成禮儀。",
+            "q → 批：有些最重要的法律有規範但同時也是道德，且有些不涉及風俗習慣的，也關乎道德判斷(如犧牲自己拯救別人，不涉及風俗習慣，但涉及道德判斷)。",
+            "p1 4. 主張四：道德判斷是沒有附帶條件的命令(如人應該遵守諾言、人不應該說謊、亂倫是錯的、人應該互相幫助)，因此附帶條件的命令，就不涉道德判斷(如果你想要賺大錢，就應該好好念書)。",
+            "q → 批：未必如此。比方，如果你答應人家，就應該遵守諾言，這雖然是條件句，但也涉及道德判斷。",
+            "q ◎ 因此，似乎沒有辦法找到一個區別道德判斷與否的標準，似乎只能仰賴直覺斷定。故而，在倫理學領域，確實無法完全避免使用道德直覺。",
+            "h3 二、倫理學的類別和道德評價的範圍",
+            "h4 (一)倫理學的分類",
+            "p1 1. 規範倫理學(normative ethics)：",
+            "p2 (1) 意義：旨在對道德觀念和道德判斷進行系統性了解，並對道德原則的合理性加以探討。一方面探討這些箴言的合理性基礎，一方面歸納出一個或一些更基本的原則，藉以作為道德判斷的依據。目的在於建構有關行為規範的基本原則，以作為日常生活面臨道德問題時的行為指導。",
+            "p2 (2) 前備知識：關於規範性的判斷，分為「道德判斷」以及「非道德價值判斷(針對事務狀態的評價，比方張三的車是一臺好車、快樂本身就是善的)」。其中「道德判斷」分為：",
+            "p3 ① 道德義務的判斷：涉及「行為」的判斷，常用道德語詞為「對/錯」、「正當/不正當」、「應該/不應該」 → 討論的是行為本身。",
+            "p3 ② 道德價值的判斷：涉及「人(動機、企圖、品格)」，常用道德語詞為「好/壞」、「有德/邪惡」等 → 討論的是行為者在實踐該行為時的動機。",
+            "p2 當代倫理學者波宜曼(Louis P. Pojman)將道德評價的範圍，區分如下：",
             "table_0",
-            "h1 貳、價值論 (Axiology)",
-            "p1 道德哲學的核心問題是「我們應該如何生活？」",
-            "p1 必須先確定追求的價值（終點），才進行道德判斷（路徑）。",
-            "q 彌勒(John Stuart Mill)：「寧願是一個不滿足的人，也不願意是一隻滿足的豬。」"
+            "p2 (3) 規範倫理學的分類：",
+            "p3 ① 目的論(teleological theory)：關注「行為」本身。主張一個行為的對錯，完全決定在該行為所實現的目的或結果。是用結果的「好/壞」來判斷行為的「對/錯」。包含：倫理利己主義、效益主義。",
+            "p3 ② 義務論(deontological theory)：關注「行為」本身。主張一個行為的對錯，不完全是行為所實現的結果或目的，而是由行為本身所具有的性質和特點來決定。因此不去看行為造成的結果，是單看行為本身。包含：康德的倫理學、洛斯的倫理學。",
+            "p3 ③ 德行倫理學(virtue ethics)：關注「行為者(人的動機、企圖、品格)」本身。批判目的論和義務論討論單獨討論行為的方向是錯的，重點不是「我應該做什麼行為」，而是「我應該要成為什麼樣的人」。基於我要成就的人格，必須培養相對應的氣質傾向，由此自然會表現在行為之中。",
+            "p1 2. 後設倫理學(metaethics)：",
+            "p2 (1) 意義：以倫理判斷和原則本身作為研究的對象。受分析哲學影響，認為規範倫理學之所以莫衷一事，就是因為語言使用不夠精確。因此應該要先對「對/錯」、「善/惡」等詞彙進行分析和定義。後設倫理學關注「道德實踐是否因社會而異」？「道德判斷是否可以得到證成」等議題。",
+            "p2 (2) 比較：規範倫理學重視的問題是：什麼東西具有價值？什麼樣的行為是對的？後設倫理學則關心價值和對錯的本質，重視的問題是：什麼是價值？什麼是道德義務？",
+            "h3 三、倫理學的價值",
+            "p1 1. 知道倫理學理論的人，不一定會成為一個道德人。但是如果一個人缺乏道德思辨和分析能力，即使想要從事道德的行為，也常會因為判斷錯誤而事與願違。我們有很多從小到大的道德教誨，但常欠缺進一步思考，導致僅停留在教條式灌輸，無法真正內化成整體性道德信念。",
+            "p1 2. 因而，研究倫理學這件事，意義至少有：",
+            "p2 (1) 使我們知道某些道德原則和其他原則不能同時成立，因此可以幫我們釐清自己的道德主張，避免自相矛盾。",
+            "p2 (2) 可以藉此發現自己的實際道德原則是什麼。知道自己道德觀念接近哪一種派別，及其優點和不足。",
+            "p2 (3) 可以讓我們對一般道德主張做批判性理解，並有能力對各派別進行優劣的評估。",
+            "p2 (4) 可以讓我們了解道德原則的理性基礎，未來從事道德教化時，不只是說教還能說理。",
+            "h2 〔二〕價值論(axiology)",
+            "p0 價值理論是哲學的一個分支，主要在研究價值的本質、什麼東西具有價值。價值理論包含道德價值和非道德價值。",
+            "h3 一、價值的類別",
+            "p1 1. 內在價值(intrinsic value)：本身就是值得人們追求之事物。若滿足「之所以追求a，是為了得到a」時，a就具有內在價值(如快樂)(反過來說，痛苦就具有內在負價值)。",
+            "p1 2. 外在價值(extrinsic value)：可以幫助我們實現最終想要追求之事物。若「之所以追求b，是為了得到a」，則b就具有外外在價值(如出國旅遊、買電視、賺錢等。因為這些最終目的是為了獲得快樂)。",
+            "h3 二、享樂主義(hedonism)",
+            "p0 目標在追求內在價值。",
+            "h4 (一)分類：",
+            "p1 1. 價值享樂主義(value hedonism)：一元論，只有快樂是唯一具有內在價值的事物。其他有價值的東西都是為了實現快樂。",
+            "p2 (1) 區別：",
+            "p3 ① 官能論(sensualism)：所有的快樂，都是感官上的快樂。所以快樂的多寡，就是由感官接受到的強度來定義。快樂的對立面是感官到的痛苦。",
+            "p3 ② 滿足論(satisfactionism)：快樂不只是感官上的快樂，還包含心靈與精神的滿足或享受。因此，快樂的對立面是不滿足。",
+            "p2 (2) 評析：滿足論較有說服力，可以解釋為什麼被虐狂就算感官痛苦，但是內心卻快樂，也能解釋，為何失戀的男女，感官即使沒有痛苦，也會覺得極度不快樂。",
+            "p2 (3) 支持者：",
+            "p3 ① 邊沁(Jeremy Bentham)：他認為只有快樂才是本身是善，其他我們稱為善的東西，本質都只是為了有助於快樂的實現。",
+            "p3 ② 彌勒(John Stuart Mill)：他認為，只有快樂或幸福才具有內在價值。人不只追求感官的快樂，還包含知性、感情、想像力、道德感等高價值的精神快樂。快樂有量的差異也有質的區分，人有精神上的快樂，這種快樂會比較優越、長久、安全。",
+            "q 「寧願是一個不滿足的人，也不願意是一隻滿足的豬。」 — J.S. Mill",
+            "p3 ● 至於為何我們會認為知識、健康等等有內在價值？其實是誤解，因為這些東西其實只有外在價值，我們之所以認為他們有內在價值，只是因為習慣而已。",
+            "p1 2. 非價值享樂主義：認為具有內在價值的事物，不是快樂(一元論)或不只是快樂。區別：",
+            "p2 (1) 一元論：一種事物具有內在價值但不是快樂。比方柏拉圖，就認為唯一具有內在價值的是「善」的理型。",
+            "p2 (2) 多元論：可以有很多種事物都具有內在價值。比方知識、美、自由、友誼、自我實現，這些都是人們可以直接追求的對象。",
+            "h3 三、價值的根源",
+            "p0 價值的基礎是什麼？",
+            "h4 (一)主觀說：",
+            "p1 1. 價值的根源完全屬於我們的內在世界，真正有價值的，是「欲望的滿足」這件事，而幫助我們達到欲望滿足的，都只是工具而已。",
+            "p1 2. 這些事物是人類欲望的函數，可能具有價值，但不是價值(比方鑽石為何有價值？是因為人們有欲望得到他，所以賦予它價值)。",
+            "h4 (二)客觀說：",
+            "p1 1. 價值是獨立於我們心靈之外，價值的根源是單獨存在這個世界上的。人類只是具有道德觀能或美感功能，並用來發現這些本來就客觀存在的價值。",
+            "p1 2. 區分：",
+            "p2 (1) 認為「價值的根源是在超越界」派：柏拉圖認為感官世界所有一切事物都是觀念界的影本。觀念界最高理型就是善(the Good)。價值的根源是超越而獨立存在的。",
+            "p2 (2) 認為「價值的根源存在事物之中」派：價值本來就單獨存在於事物之中，獨立於人類存在，有價值的事物不管有沒有人類渴求他，他都有價值(如雲海本身就美)。",
+            "h3 四、價值和道德的關係",
+            "p1 1. 道德哲學的核心問題是「我們應該如何生活？」要弄清楚道德之前，要先了解價值。每個道德理論，都是指向各自的價值追求。換言之，道德判斷往往都是以價值的追求作為基礎，要先確認追求的價值是什麼(終點)，才進行道德判斷(路徑)。",
+            "p1 2. 道德衝突其實源頭就是價值衝突：",
+            "p2 (1) 比方張三面臨選擇「準時赴約」還是「救助重傷機車騎士」，就面臨道德衝突。此時就面臨價值選擇，如果我們認為張三要救助機車騎士，就是認為生命的價值高於信守承諾的價值。",
+            "p2 (2) 如果我們能明確知悉價值的高低或優劣，那道德的衝突處境就會降低。若我們無法決定價值優劣，那價值的取捨就會轉換成道德判斷的不確定性。",
+            "p2 (3) 結論：任何一種道德理論都預設了某種特殊的價值理論。",
+            
+            "h1 貳、規範倫理學",
+            "h2 〔一〕目的論：利己主義",
+            "h3 一、心理利己主義(psychological egoism)",
+            "h4 (一)定義：",
+            "p0 所有人類行為的動機都是出自「自我關懷的(self-regarding)」。唯一可能讓任何人當成最終目標去實現或追求的東西，就是他自己的利益。",
+            "q ◎ 註解差異：心理利己主義認為「人會追求自己的利益」是一個既存事實(人不可能做出不利己的事)。而倫理利己主義認為「人要追求自己的利益」是一個道德指引(人有可能做出不利己的事，只是這樣違反道德)。",
+            "h4 (二)支持與批評",
+            "p1 1. 費因柏格(Joel Feinberg)歸納的反駁：",
+            "p2 (1) 個人所有權論證：我的任何行為都是由我的動機引發，所以我總是追求滿足我自己。",
+            "q → 批：一個人的行為是由他自己的動機引發，但不能執此即謂這個動機就是基於自私的動機。這混淆了「行為者動機」和「自私動機」。",
+            "p2 (2) 享樂主義論證：一個人得到他想要的就會感到快樂，所以追求快樂是唯一手段。",
+            "q → 批：得到想要的未必就會感到快樂。幫助他人，如果不是出於關心他人，又怎麼會因為關心他人而感到快樂呢？",
+            "h3 二、倫理利己主義(ethical egoism)",
+            "h4 (一)定義：",
+            "p0 每個人都應該提升自己的利益，人們有義務去從事任何可以有利於自己的事。",
+            "q ◎ 倫理利己主義的「利己」，是「開明的利己(enlightened self-interest)」。行為者會基於長期較大的利益犧牲短期較小的利益。他們很有可能會做利他的事(如選擇誠實以獲得信任)。我們沒有辦法從外顯的行為判斷一個人是不是倫理的利己主義者。",
+            "h3 三、利他主義(altruism)",
+            "h4 (一)要點：",
+            "p1 1. 利他主義必須付諸行動。主要目標是提升他人的福祉。",
+            "p1 2. 利他的行為必然會造成行為者可能的損害，且是無條件的，行為者不能預期回報。",
+            "h4 (二)支持者：",
+            "p0 辛格(Peter Singer)提出互惠利他主義(reciprocal altruism)：",
+            "p1 1. 認為人類許多倫理規範都是從互惠行為產生。對公平待你之人要報恩，對欺騙你之人要報仇。",
+            "p1 2. 上述報恩、報仇的「回報」義務概念，就是正義的起源。有利他動機的人，比有利己動機的人，更可能成為可靠的夥伴，演化下來，利他者具有優勢。",
+            
+            "h2 〔二〕目的論：效益主義",
+            "h3 一、效益主義的定義及相關問題",
+            "h4 (一)定義：",
+            "p0 在所有可能選擇的行為中，要求效益最大化(the maximization of utility)，當其整體結果能產生最大量的善或最小量的惡的行為，就是符合效益原則的對的行為。",
+            "h4 (二)行為和規則效益主義：",
+            "p1 1. 規則效益主義(rule utilitarianism)：此派的行為，是指統稱的行為(某一類行為)。效益原則是拿來檢驗道德規則，會討論「我們該不該做A類行為」？若普遍A類行為不是效益最大，則我們每次都不應該做A。",
+            "p1 2. 行為效益主義(act utilitarianism)：此派的行為，是指具體、個別的行為。會討論「我們該不該做這次的A行為」？",
+            "h3 二、對效益主義的質疑",
+            "p1 1. 消極責任的壓力：只要行為者能間接影響結果，不管他是否主動促成，都要為結果負責。這會嚴重影響人格完整性，使對行為的要求永無止盡。",
+            "p1 2. 過度簡化：將結果效益最大化視為唯一標準，可能導致我們視為邪惡的制度(如犧牲少數人)被接受，且讓每個行為(包含休閒)都變成嚴肅的道德問題。",
+            "p1 3. 忽略分配正義：只在意產生最大效益，並不關心這些效益如何分配。",
+            "p1 4. 欠缺超義務行為：效益主義讓每個行為都面臨「對/錯」二分，沒有「做很好，不做也沒關係」的聖賢行徑存在的空間。",
+            "h3 三、效益主義對前開質疑的答辯",
+            "h4 (一)黑爾(R. M. Hare)的兩個層次道德思考：",
+            "p1 1. 直覺的道德思考：來自從小到大的道德教養，將事物納入成為表面原則(prima facie principles)來處理日常問題。此階段不計算效益。",
+            "p1 2. 批判的道德思考：當表面原則發生衝突時，進入效益主義式的思考，利用效益原則解決衝突，歸納出新的道德規則。",
+            
+            "h2 〔三〕康德的倫理學",
+            "h3 一、善意志(good will)與道德三命題",
+            "p1 (一) 第一命題：有道德價值的行為必須是因義務而為。",
+            "p1 (二) 第二命題：一個因義務而為之行為，其道德價值不在於由此行為所達成的目的，而在於此行為的準則(maxim)。",
+            "p1 (三) 第三命題：義務是尊重法則的必然行為。",
+            "h3 二、定言令式的形式",
+            "p1 (一) 普遍化原則",
+            "p1 (二) 目的原則 (人是目的，而非手段)",
+            "p1 (三) 自律原則",
+
+            "h2 〔四〕洛斯的直覺主義",
+            "h3 一、對結果論的批評",
+            "p1 (一) 對利己主義的批判",
+            "p1 (二) 對享樂效益主義的批判",
+            "p1 (三) 對理想效益主義的批判",
+
+            "h2 〔五〕德行倫理學",
+            "h3 一、德行倫理學的意義",
+            "p0 批判目的論和義務論。重點不是「我應該做什麼行為」，而是「我應該要成為什麼樣的人」。基於我要成就的人格，培養相對應的氣質傾向。",
+
+            "h1 參、後設倫理學與道德本質",
+            "h2 〔一〕穆爾(G. E. Moore)的非自然主義",
+            "h3 一、自然主義的謬誤",
+            "p1 (一) 開放問題論證(open-question argument)：穆爾認為善(Good)是不可定義的單純性質，任何試圖用自然性質(如快樂、幸福)來定義「善」的企圖，都會犯下自然主義的謬誤。",
+            
+            "h2 〔二〕情緒論與規約論",
+            "h3 一、艾耳(A.J. Ayer)的情緒論(emotivism)",
+            "p0 道德語詞只是表達說話者的情緒，沒有真假可言。",
+            "h3 二、規約論(prescriptivism)",
+            "p0 道德語言具有指令性(引導行為)與可普遍化性。",
+
+            "h2 〔三〕為什麼要有道德？",
+            "h3 一、葛勞康(Glaucon)的論證",
+            "p1 (一) 蓋吉氏(the ring of Gyges)的戒指：如果擁有隱形戒指不受懲罰，所有人(無論正義或不正義者)最終都會選擇做壞事追求私利。道德只是社會妥協。",
+            
+            "h1 肆、社會正義",
+            "h2 〔一〕羅爾斯(John Rawls)的正義論",
+            "h3 一、正義即公平(justice as fairness)",
+            "p1 (一) 原初立場與無知之幕(veil of ignorance)：假設立約者在不知道自己社會地位、天賦、階級的情況下，共同制定出來的社會規則，才是最公平正義的。",
+            "p1 (二) 正義兩原則：",
+            "p2 1. 平等自由權原則。",
+            "p2 2. 差異原則(對社會最弱勢者最有利)與公平機會平等原則。",
+
+            "h2 〔二〕諾次克(Robert Nozick)的正義論",
+            "h3 一、正義即資格(justice as entitlement)",
+            "p0 反對羅爾斯的分配正義，強調個人財產權絕對神聖。包含：取得之正義原則、交換之正義原則、糾正不正義持有之原則。"
         ];
 
+        // 專屬玻璃表格組件
         const GlassTable = () => (
             e('div', { className: 'pdf-table-wrapper' },
                 e('table', { className: 'pdf-table' },
-                    e('thead', null, e('tr', null, e('th', null, "評價範圍"), e('th', null, "對應詞彙"), e('th', null, "說明"))),
+                    e('thead', null,
+                        e('tr', null,
+                            e('th', null, "評價範圍"),
+                            e('th', null, "對應評價詞語"),
+                            e('th', null, "倫理學重點說明")
+                        )
+                    ),
                     e('tbody', null,
-                        e('tr', null, e('td', {className:'text-white font-bold'}, "行為"), e('td', null, "對/錯"), e('td', null, "道德上的義務要求。")),
-                        e('tr', null, e('td', {className:'text-white font-bold'}, "動機"), e('td', null, "善/惡"), e('td', null, "實踐行為時的意圖。")),
-                        e('tr', null, e('td', {className:'text-white font-bold'}, "人格"), e('td', null, "有德/邪惡"), e('td', null, "長期的品格傾向。"))
+                        e('tr', null,
+                            e('td', { className: 'font-bold text-white' }, "行為"),
+                            e('td', { className: 'text-indigo-200' }, "對的 / 錯的 / 超義務的"),
+                            e('td', { className: 'text-sm' }, "對的行為：道德上要求去實踐的。錯的行為：有義務不去實踐的。超義務：遠超過道德要求，可做可不做(如聖賢行徑)。")
+                        ),
+                        e('tr', null,
+                            e('td', { className: 'font-bold text-white' }, "結果"),
+                            e('td', { className: 'text-indigo-200' }, "好的 / 壞的"),
+                            e('td', { className: 'text-sm' }, "行為所產生的事態效應好壞。")
+                        ),
+                        e('tr', null,
+                            e('td', { className: 'font-bold text-white' }, "人格"),
+                            e('td', { className: 'text-indigo-200' }, "有品德的 / 邪惡的"),
+                            e('td', { className: 'text-sm' }, "行為者的長期品格傾向，為德行論重點。")
+                        ),
+                        e('tr', null,
+                            e('td', { className: 'font-bold text-white' }, "動機"),
+                            e('td', { className: 'text-indigo-200' }, "善意的 / 惡意的"),
+                            e('td', { className: 'text-sm' }, "從事行為，僅因盡義務為善意；考量其他私利因素為惡意。道德上對的行為也可能來自惡的動機。")
+                        )
                     )
                 )
             )
         );
 
         function ReadingPage() {
-            return e('div', { className: 'max-w-4xl mx-auto px-6 py-8 fade-in pdf-container' },
+            return e('div', { className: 'max-w-4xl mx-auto px-6 py-12 fade-in pdf-container' },
                 pdfContentLines.map((line, idx) => {
                     if (line.startsWith('# ')) return e('h1', { key: idx, className: 'pdf-title' }, line.slice(2));
                     if (line.startsWith('h1 ')) return e('h1', { key: idx, className: 'pdf-h1' }, line.slice(3));
                     if (line.startsWith('h2 ')) return e('h2', { key: idx, className: 'pdf-h2' }, line.slice(3));
-                    if (line.startsWith('p1 ')) return e('p', { key: idx, className: 'mb-4' }, line.slice(3));
+                    if (line.startsWith('h3 ')) return e('h3', { key: idx, className: 'pdf-h3' }, line.slice(3));
+                    if (line.startsWith('h4 ')) return e('h4', { key: idx, className: 'pdf-h4' }, line.slice(3));
+                    if (line.startsWith('p0 ')) return e('p', { key: idx, className: 'pdf-p0' }, line.slice(3));
+                    if (line.startsWith('p1 ')) return e('p', { key: idx, className: 'pdf-p1' }, line.slice(3));
+                    if (line.startsWith('p2 ')) return e('p', { key: idx, className: 'pdf-p2' }, line.slice(3));
+                    if (line.startsWith('p3 ')) return e('p', { key: idx, className: 'pdf-p3' }, line.slice(3));
                     if (line.startsWith('q ')) return e('div', { key: idx, className: 'pdf-quote' }, line.slice(2));
                     if (line.startsWith('table_0')) return e(GlassTable, { key: idx });
                     return null;
@@ -119,22 +325,35 @@
         }
 
         // ==========================================
-        // 主程式：思辨實驗室
+        // 互動實驗室 (整合背景音樂版)
         // ==========================================
         function App() {
-            const [activeTab, setActiveTab] = useState('lab');
+            const [activeTab, setActiveTab] = useState('lab'); 
             const [activeFlow, setActiveFlow] = useState(null);
             const [step, setStep] = useState(0);
             const [selectedChoice, setSelectedChoice] = useState(null);
             const [reflection, setReflection] = useState('');
             const [isSubmitted, setIsSubmitted] = useState(false);
+            
+            // 背景音樂控制 State
+            const [isPlaying, setIsPlaying] = useState(false);
+            const audioRef = useRef(null);
 
-            useEffect(() => { window.scrollTo(0, 0); }, [activeTab, activeFlow]);
+            const toggleAudio = () => {
+                if (audioRef.current) {
+                    if (isPlaying) {
+                        audioRef.current.pause();
+                    } else {
+                        audioRef.current.play().catch(e => console.error("音樂播放被瀏覽器阻擋:", e));
+                    }
+                    setIsPlaying(!isPlaying);
+                }
+            };
 
             const experiments = {
-                trolley: { title: "電車問題", tag: "規範倫理：目的論", icon: "Train", color: "#f87171", img: "https://i.ibb.co/Q7fssnLR/trolley.png" },
-                fatman: { title: "胖子與天橋", tag: "規範倫理：義務論", icon: "Hand", color: "#fb923c", img: "https://i.ibb.co/YFyxd89X/fatman.png" },
-                transplant: { title: "器官捐贈", tag: "規則 vs. 行為效益", icon: "Activity", color: "#f472b6", img: "https://i.ibb.co/nNCMznHt/transplant.png" },
+                trolley: { title: "電車問題", tag: "規範倫理學：目的論", icon: "Train", color: "#f87171", img: "https://i.ibb.co/Q7fssnLR/trolley.png" },
+                fatman: { title: "胖子與天橋", tag: "規範倫理學：義務論", icon: "Hand", color: "#fb923c", img: "https://i.ibb.co/YFyxd89X/fatman.png" },
+                transplant: { title: "器官捐贈", tag: "規則 vs. 行為效益主義", icon: "Activity", color: "#f472b6", img: "https://i.ibb.co/nNCMznHt/transplant.png" },
                 machine: { title: "快樂機器", tag: "價值論：享樂主義", icon: "Brain", color: "#a78bfa", img: "https://i.ibb.co/7J8MXPnV/machine.png" },
                 lifeboat: { title: "救生艇兩難", tag: "社會正義：分配正義", icon: "LifeBuoy", color: "#22d3ee", img: "https://i.ibb.co/bgbkn0Zx/lifeboat.png" },
                 ring: { title: "蓋吉氏戒指", tag: "倫理利己主義", icon: "Gem", color: "#fbbf24", img: "https://i.ibb.co/8n7fN5zY/ring.png" }
@@ -144,126 +363,187 @@
                 trolley: {
                     dilemma: "失控電車衝向 5 人，轉轍器可切換至 1 人軌道。你拉嗎？",
                     options: [
-                        { text: "拉下轉轍器 (1死5生)", feedback: "這符合「行為效益主義」：在單一事件中追求最大效益。", perspective: { name: "效益原則", desc: "主張整體結果能產生最大量的善時，就是對的行為。" } },
-                        { text: "什麼都不做 (5死1生)", feedback: "這體現了「義務論」立場：有些行為本質就是錯誤的，不可轉嫁傷害。", perspective: { name: "義務論", desc: "康德提出，行為對錯不由結果決定，而是由行為性質決定。" } }
+                        { text: "拉下轉轍器 (1死5生)", feedback: "你選擇了行動。這符合林火旺教授所提的「行為效益主義」，即針對具體行為計算最大效益。你認為結果的「好/壞」決定了行為的「對/錯」。", perspective: { name: "效益原則 (Utility Principle)", desc: "主張在所有行為中，當其整體結果能產生最大量的善時，就是對的行為。此處 5 大於 1。" } },
+                        { text: "什麼都不做 (5死1生)", feedback: "你堅守了義務論。你拒絕將無辜者當作達成目的的工具，認為殺害無辜者本質上就是錯誤的。", perspective: { name: "義務論 (Deontology)", desc: "康德提出，行為對錯不由結果決定。義務是尊重法則的必然行為，不容許轉嫁傷害。" } }
                     ],
-                    questions: "「主動殺人」與「任由死亡」有區別嗎？"
+                    questions: "「主動殺人」與「任由死亡」，在道德上有本質區別嗎？"
                 },
                 fatman: {
-                    dilemma: "推下一名胖子擋住電車救下 5 人，你會動手嗎？",
+                    dilemma: "推下一名胖子擋住電車可救下 5 人。你會動手嗎？",
                     options: [
-                        { text: "推下胖子 (殺一救五)", feedback: "採取極端結果論。引發了「消極責任」質疑：你是否承擔了不該有的負擔？", perspective: { name: "結果論", desc: "行為對錯純粹由其產生的總體效益來決定。" } },
-                        { text: "絕對不推 (捍衛生命)", feedback: "契合「雙重效應原則」：拒絕將人命當作達成目的的工具。", perspective: { name: "目的原則", desc: "康德強調：「人是目的，而非手段」。" } }
+                        { text: "推下胖子 (殺一救五)", feedback: "你採取了結果論立場。但也引發了「消極責任」的質疑：你是否承擔了本不該由你承擔的負擔？", perspective: { name: "結果論 (Consequentialism)", desc: "純粹以結果定義對錯。若最終獲救人數大於死亡人數，行為即被證成。" } },
+                        { text: "絕對不推 (捍衛尊嚴)", feedback: "你意識到手段與目的。這與「雙重效應原則」契合：你拒絕將人命當作純粹的手段。", perspective: { name: "目的原則", desc: "康德強調：「人是目的，而非手段」。推下胖子直接將其視為工具，是絕對禁止的。" } }
                     ],
-                    questions: "道德是數學計算，還是不容退讓的義務？"
+                    questions: "道德是冷靜的數學計算，還是必須守護的根本底線？"
                 },
                 transplant: {
-                    dilemma: "醫生拆分健康者的器官救活 5 人。你會執行手術嗎？",
+                    dilemma: "醫生拆分健康者的器官救活 5 人。你同意嗎？",
                     options: [
-                        { text: "執行手術 (效益極大化)", feedback: "這是行為效益主義的極端運用。忽略了社會信任系統的崩潰成本。", perspective: { name: "行為效益主義", desc: "僅看單次個案的數值回報，忽略長期制度影響。" } },
-                        { text: "拒絕手術 (維護制度)", feedback: "選擇了「規則效益主義」。保護病人權利是維護社會長遠最大幸福的規則。", perspective: { name: "規則效益主義", desc: "效益原則是用來檢驗規則，而非單次行為。" } }
+                        { text: "執行手術 (極大化效益)", feedback: "這是行為效益主義令人不安的運用。你忽略了林火旺教授提到的「社會信任系統」崩潰的潛在價值損失。", perspective: { name: "行為效益主義的盲點", desc: "過度關注個案。若所有人恐懼去醫院，社會整體的安全與信任價值將歸零。" } },
+                        { text: "拒絕手術 (維護制度)", feedback: "你選擇了規則效益主義。保護身體自主權是一條能達成社會長遠最大幸福的規則。", perspective: { name: "規則效益主義", desc: "效益原則應用於檢驗「道德規則」。保護個人自主權是長遠效益最大的規則。" } }
                     ],
-                    questions: "如果為了「大眾」隨時可犧牲你，你渴望這種社會嗎？"
+                    questions: "如果為了「大眾幸福」可以隨時犧牲你，你還願意信賴這個社會嗎？"
                 },
                 machine: {
-                    dilemma: "獲得虛擬的永遠快樂且不知情，你願意進入機器嗎？",
+                    dilemma: "獲得永遠的虛擬快樂，你會選擇進入機器嗎？",
                     options: [
-                        { text: "進入機器 (追求價值)", feedback: "認同享樂主義：快樂是唯一具有內在價值的事物。", perspective: { name: "享樂主義", desc: "只要精神與感官滿足，現實與否並不重要。" } },
-                        { text: "留在現實 (追求真實)", feedback: "認同價值多元論：真實地活過、自我實現比快樂更重要。", perspective: { name: "價值多元論", desc: "認為除了快樂，真實與自主也具有內在價值。" } }
+                        { text: "進入機器 (享樂主義)", feedback: "你認同享樂主義：快樂是唯一具有內在價值的事物。只要滿足感足夠，虛擬與否並不重要。", perspective: { name: "價值享樂主義", desc: "只有快樂是唯一具有內在價值的事物。其他東西都是為了實現快樂的工具。" } },
+                        { text: "留在現實 (真實價值)", feedback: "你認為人生有比快樂更重要的價值。林火旺提到諾齊克的反思：我們在乎「真實地活過」。", perspective: { name: "客觀清單理論", desc: "除了快樂，我們還在乎真實性、自我實現以及與現實世界的連結。" } }
                     ],
-                    questions: "真實的痛苦與虛擬的快樂，你選哪一個？"
+                    questions: "「寧願是不滿足的人，也不願是滿足的豬。」你認同嗎？"
                 },
                 lifeboat: {
-                    dilemma: "最後一席位，給天才、孤兒，還是孕婦？",
+                    dilemma: "最後一席救生艇，要給天才、孤兒，還是孕婦？",
                     options: [
-                        { text: "基於社會價值挑選", feedback: "試圖對生命排序。這暴露了目的論在分配正義上的脆弱性。", perspective: { name: "分配正義難題", desc: "效益主義在意總和，卻常忽略如何公平分配。" } },
-                        { text: "抽籤決定 (絕對平等)", feedback: "符合無知之幕精神：在未知身分下，唯一公平的是保護平等機率。", perspective: { name: "無知之幕", desc: "羅爾斯主張在公平立場下制定的規則才是正義。" } }
+                        { text: "基於社會貢獻排序", feedback: "你試圖對生命排序。這暴露了目的論在面對正義分配時的脆弱與爭議性。", perspective: { name: "分配正義難題", desc: "效益主義常忽略分配正義。少數人的苦難若能成就多數人的巨大滿足，有時會被其採納。" } },
+                        { text: "抽籤決定 (平等平權)", feedback: "這符合「無知之幕」的精神。在極端情況下，唯一的道德方式是保護每個個體的平等機率。", perspective: { name: "無知之幕 (Veil of Ignorance)", desc: "羅爾斯主張在不知道自己身分的情況下制定的規則，才是最公平的正義。" } }
                     ],
-                    questions: "生命的重量可以被量化比較嗎？"
+                    questions: "生命的重量可以量化比較嗎？如果可以，誰擁有定價權？"
                 },
                 ring: {
-                    dilemma: "若有隱身戒指且不受懲罰，你還會堅持道德嗎？",
+                    dilemma: "若有隱身戒指且不受罰，你還會堅持道德嗎？",
                     options: [
-                        { text: "為了私利行動", feedback: "觸及心理利己主義：認為人類行為終極目標總是自我關懷。", perspective: { name: "社會契約論", desc: "認為道德只是弱者為了防範受害而妥協的契約。" } },
-                        { text: "依然堅持道德", feedback: "實踐德行論：道德是為了追求靈魂的健全與真實的幸福。", perspective: { name: "德行倫理學", desc: "重點不在行為對錯，而在「我要成為什麼樣的人」。" } }
+                        { text: "會為了私利行動", feedback: "這觸及了格勞孔的論證：道德只是弱者為防受害的契約。若無風險，追求利益被視為理性的表現。", perspective: { name: "利己主義 (Egoism)", desc: "認為正義是出於對懲罰的恐懼。若無監督，追求自我利益是人的本性。" } },
+                        { text: "依然堅持道德", feedback: "你實踐了德行論。你認為道德是為了靈魂的健康，做壞事會腐蝕自己獲得幸福的能力。", perspective: { name: "德行倫理學", desc: "核心在於「我要成為什麼樣的人」。建立穩定的德行品格，就是最高的理性目標。" } }
                     ],
-                    questions: "道德是外在枷鎖，還是靈魂健全的表現？"
+                    questions: "道德是外在的枷鎖，還是內在人格的健全表現？"
                 }
             };
 
             const goHome = () => { setActiveFlow(null); setStep(0); setSelectedChoice(null); };
 
-            return e('div', { className: 'min-h-screen pb-10' },
-                e('nav', { className: 'sticky top-0 z-50 glass border-b border-white/5 px-5 py-4 flex justify-center gap-10 md:gap-20 shadow-2xl' },
-                    e('button', { onClick: () => { setActiveTab('lab'); goHome(); }, className: `nav-btn text-base md:text-lg font-bold flex items-center gap-2 ${activeTab === 'lab' ? 'active' : 'text-slate-500'}` }, e(LucideIcon, {name:'FlaskConical', className:'w-5 h-5'}), "思辨實驗室"),
-                    e('button', { onClick: () => setActiveTab('reading'), className: `nav-btn text-base md:text-lg font-bold flex items-center gap-2 ${activeTab === 'reading' ? 'active' : 'text-slate-500'}` }, e(LucideIcon, {name:'BookOpen', className:'w-5 h-5'}), "經典導讀")
+            return e('div', { className: 'min-h-screen pb-10 relative' },
+                // === 隱藏的音頻播放器 (播放沉浸式太空氛圍音樂) ===
+                e('audio', { ref: audioRef, src: 'https://cdn.pixabay.com/download/audio/2022/11/22/audio_febc508520.mp3?filename=space-atmospheric-background-124626.mp3', loop: true }),
+
+                // 頂部導覽列 (加入音樂開關按鈕)
+                e('nav', { className: 'sticky top-0 z-50 glass border-b border-white/10 px-6 py-4 flex justify-center items-center gap-6 md:gap-12 shadow-lg backdrop-blur-xl relative' },
+                    e('button', { onClick: () => { setActiveTab('lab'); goHome(); window.scrollTo(0,0); }, className: `nav-btn text-base md:text-lg font-bold tracking-widest flex items-center gap-2 ${activeTab === 'lab' ? 'active' : 'text-slate-400 hover:text-slate-200'}` }, e(LucideIcon, {name:'FlaskConical', className:'w-5 h-5'}), "思辨實驗室"),
+                    e('button', { onClick: () => { setActiveTab('reading'); window.scrollTo(0,0); }, className: `nav-btn text-base md:text-lg font-bold tracking-widest flex items-center gap-2 ${activeTab === 'reading' ? 'active' : 'text-slate-400 hover:text-slate-200'}` }, e(LucideIcon, {name:'BookOpen', className:'w-5 h-5'}), "經典導讀"),
+                    
+                    // 音樂開關按鈕 (放置於導覽列右側)
+                    e('button', { 
+                        onClick: toggleAudio, 
+                        title: isPlaying ? "暫停背景音樂" : "播放背景音樂",
+                        className: `absolute right-4 md:right-8 p-2 rounded-full transition-all border flex items-center justify-center ${isPlaying ? 'bg-indigo-600/30 text-indigo-300 border-indigo-500/50 shadow-[0_0_15px_rgba(99,102,241,0.3)]' : 'bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700 hover:text-white'}` 
+                    }, 
+                        e(LucideIcon, { name: isPlaying ? 'Volume2' : 'VolumeX', className: 'w-5 h-5' })
+                    )
                 ),
 
                 activeTab === 'lab' ? (
                     activeFlow ? (
-                        e('div', { className: 'max-w-2xl mx-auto py-8 px-6 fade-in' },
-                            e('button', { onClick: goHome, className: 'mb-6 flex items-center gap-2 text-slate-400 active:scale-90 transition-all' }, e(LucideIcon, { name: 'ArrowLeft', className: 'w-4 h-4' }), " 返回大廳"),
-                            e('div', { className: 'glass p-8 md:p-10 rounded-3xl border-l-4 shadow-2xl', style: { borderColor: experiments[activeFlow].color } },
-                                e('h2', { className: 'text-2xl md:text-3xl font-bold mb-6 text-white' }, experiments[activeFlow].title),
-                                e('div', { className: 'w-full h-44 md:h-56 mb-8 rounded-2xl overflow-hidden' }, e('img', { src: experiments[activeFlow].img, className:'w-full h-full object-cover' })),
+                        e('div', { className: 'max-w-3xl mx-auto py-12 px-6 fade-in' },
+                            e('button', { onClick: goHome, className: 'mb-8 flex items-center gap-2 text-slate-400 hover:text-white transition-colors' },
+                                e(LucideIcon, { name: 'ArrowLeft', className: 'w-4 h-4' }), " 返回大廳"
+                            ),
+                            e('div', { className: 'glass p-8 md:p-12 rounded-[2rem] border-l-4 shadow-2xl', style: { borderColor: experiments[activeFlow].color } },
+                                e('div', { className: 'flex justify-between items-start mb-6' },
+                                    e('div', null,
+                                        e('span', { className: 'theory-tag mb-2 inline-block' }, experiments[activeFlow].tag),
+                                        e('h2', { className: 'text-3xl md:text-4xl font-bold flex items-center gap-4 text-white' }, experiments[activeFlow].title)
+                                    ),
+                                    e(LucideIcon, { name: experiments[activeFlow].icon, color: experiments[activeFlow].color, className: 'w-10 h-10' })
+                                ),
+                                
+                                e('div', { className: 'w-full h-48 md:h-64 mb-10 rounded-2xl overflow-hidden relative border border-white/10 shadow-lg' },
+                                    e('img', { 
+                                        src: experiments[activeFlow].img, 
+                                        className: 'w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity duration-500' 
+                                    }),
+                                    e('div', { className: 'absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent pointer-events-none' })
+                                ),
+
                                 step === 0 ? e('div', null,
-                                    e('div', { className: 'p-6 bg-slate-900/60 rounded-2xl border border-slate-700 mb-8' }, e('p', { className: 'text-lg text-slate-200' }, studyGuides[activeFlow].dilemma)),
-                                    e('div', { className: 'grid grid-cols-1 gap-4' },
+                                    e('div', { className: 'p-8 bg-slate-900/60 rounded-2xl border border-slate-700 mb-10' },
+                                        e('p', { className: 'text-xl text-slate-200 leading-relaxed' }, studyGuides[activeFlow].dilemma)
+                                    ),
+                                    e('div', { className: 'grid grid-cols-1 md:grid-cols-2 gap-4' },
                                         studyGuides[activeFlow].options.map((opt, idx) => 
-                                            e('button', { key: idx, onClick: () => { setSelectedChoice(idx); setStep(1); }, className: 'p-5 bg-slate-800 active:bg-indigo-600 rounded-xl font-bold text-white border border-slate-700 active:scale-[0.98]' }, opt.text)
+                                            e('button', { key: idx, onClick: () => { setSelectedChoice(idx); setStep(1); }, className: 'p-6 bg-slate-800 hover:bg-indigo-600 rounded-xl font-bold text-lg text-white transition-all transform hover:scale-[1.03] shadow-lg border border-slate-700 hover:border-indigo-400' }, opt.text)
                                         )
                                     )
-                                ) : e('div', { className: 'fade-in space-y-6' },
-                                    e('div', { className: 'p-6 bg-indigo-900/20 rounded-2xl border border-indigo-500/30' },
-                                        e('p', { className: 'text-lg text-white mb-4 font-medium' }, studyGuides[activeFlow].options[selectedChoice].feedback),
-                                        e('div', { className: 'p-4 bg-slate-950/80 rounded-xl border-l-4 border-indigo-500 text-sm' }, 
-                                            e('b', {className:'block mb-1 text-indigo-400'}, studyGuides[activeFlow].options[selectedChoice].perspective.name),
-                                            studyGuides[activeFlow].options[selectedChoice].perspective.desc
+                                ) : e('div', { className: 'fade-in space-y-8' },
+                                    e('div', { className: 'p-8 bg-indigo-900/20 rounded-2xl border border-indigo-500/50 shadow-inner' },
+                                        e('h4', { className: 'text-indigo-300 font-bold mb-4 flex items-center gap-2 text-lg' }, e(LucideIcon, {name:'User', className:'w-5 h-5'}), "你的選擇與反思"),
+                                        e('p', { className: 'text-xl text-white leading-relaxed font-medium mb-6' }, studyGuides[activeFlow].options[selectedChoice].feedback),
+                                        e('div', { className: 'p-5 bg-slate-900/80 rounded-xl border-l-4 border-indigo-400' },
+                                            e('h5', { className: 'text-indigo-300 font-bold text-lg mb-2' }, studyGuides[activeFlow].options[selectedChoice].perspective.name),
+                                            e('p', { className: 'text-slate-300 leading-relaxed' }, studyGuides[activeFlow].options[selectedChoice].perspective.desc)
                                         )
                                     ),
-                                    e('button', { onClick: goHome, className: 'w-full py-4 bg-slate-800 hover:bg-slate-700 rounded-xl font-bold active:scale-95' }, "完成討論，返回大廳")
+                                    e('div', { className: 'p-8 bg-slate-900/60 rounded-2xl border-l-4 border-blue-500 shadow-inner' },
+                                        e('h4', { className: 'text-blue-400 font-bold mb-4 flex items-center gap-2 text-lg' }, e(LucideIcon, {name:'MessageSquare', className:'w-5 h-5'}), "導讀員提問：深度討論"),
+                                        e('p', { className: 'text-xl text-white leading-relaxed font-bold' }, studyGuides[activeFlow].questions)
+                                    ),
+                                    e('button', { onClick: goHome, className: 'w-full py-4 bg-slate-800 hover:bg-slate-700 rounded-xl font-bold text-white transition-colors' }, "完成討論，返回大廳")
                                 )
                             )
                         )
                     ) : (
-                        e('div', { className: 'max-w-5xl mx-auto py-10 px-6 fade-in' },
-                            e('header', { className: 'text-center mb-16' },
-                                e('h1', { className: 'text-4xl md:text-6xl font-black mb-4 bg-gradient-to-r from-blue-400 to-pink-500 bg-clip-text text-transparent' }, "倫理學思辨實驗室"),
-                                e('p', { className: 'text-slate-400 text-lg' }, "在抉擇中釐清價值的重量")
+                        e('div', { className: 'max-w-5xl mx-auto py-12 px-6 fade-in' },
+                            e('div', { className: 'text-center mb-16 pt-8' },
+                                e('h1', { className: 'text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent tracking-wide' }, "倫理學讀書會實驗室"),
+                                e('p', { className: 'text-slate-300 text-xl font-medium max-w-2xl mx-auto leading-relaxed' }, "透過林火旺教授的思辨架構，我們在此對日常習而不察的道德規則提出質疑。")
                             ),
-                            e('div', { className: 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16' },
+                            e('div', { className: 'grid grid-cols-1 md:grid-cols-3 gap-6 mb-20' },
+                                [
+                                    { title: '什麼是倫理學？', content: '對背景預設進行批判評估，透過理性能力為道德處境找解答。', icon: 'Search' },
+                                    { title: '價值的選擇', content: '道德衝突源頭即價值衝突。必須先釐清價值，才能進行判斷。', icon: 'Scale' },
+                                    { title: '如何生活？', content: '不只是研究理論，而是為了在抉擇時能比較輕鬆且篤定。', icon: 'Sun' }
+                                ].map((item, idx) => e('div', { key: idx, className: 'bg-[#10172a] p-8 rounded-2xl border border-indigo-500/30 hover:border-indigo-400/60 transition-all shadow-lg' },
+                                    e('div', { className: 'flex items-center gap-3 mb-4 text-indigo-300 font-bold text-lg' }, 
+                                        e(LucideIcon, { name: item.icon, className: 'w-6 h-6' }), item.title
+                                    ),
+                                    e('p', { className: 'text-slate-400 text-base leading-relaxed' }, item.content)
+                                ))
+                            ),
+                            e('div', { className: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24' },
                                 Object.entries(experiments).map(([key, exp]) => 
-                                    e('div', { key, onClick: () => setActiveFlow(key), className: 'glass rounded-2xl overflow-hidden cursor-pointer hover:scale-[1.02] active:scale-[0.98] transition-all group' },
-                                        e('div', { className: 'h-40 md:h-48 relative overflow-hidden' },
-                                            e('img', { src: exp.img, className: 'h-full w-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700' }),
-                                            e('div', { className: 'absolute top-3 left-3 px-3 py-1 bg-black/50 backdrop-blur-md rounded-full text-[10px] text-indigo-300 border border-indigo-500/30' }, exp.tag)
+                                    e('div', { key, onClick: () => setActiveFlow(key), className: 'glass rounded-2xl overflow-hidden cursor-pointer hover:scale-[1.03] hover:border-indigo-500/50 transition-all group shadow-xl' },
+                                        e('div', { className: 'h-48 relative overflow-hidden bg-slate-900' },
+                                            e('img', { src: exp.img, className: 'h-full w-full object-cover opacity-60 group-hover:opacity-90 transition-all duration-700 group-hover:scale-110' }),
+                                            e('div', { className: 'absolute top-3 left-3' }, e('span', { className: 'theory-tag shadow-md' }, exp.tag))
                                         ),
-                                        e('div', { className: 'p-5 flex justify-between items-center' }, e('h3', { className: 'font-bold text-white' }, exp.title), e(LucideIcon, { name: exp.icon, color: exp.color, className:'w-5 h-5' }))
+                                        e('div', { className: 'p-6 flex justify-between items-center' },
+                                            e('h3', { className: 'text-xl font-bold text-white' }, exp.title),
+                                            e(LucideIcon, { name: exp.icon, color: exp.color })
+                                        )
                                     )
                                 )
                             ),
-                            e('div', { className: 'glass p-8 md:p-12 rounded-3xl border-t-4 border-indigo-500 relative overflow-hidden' },
-                                e('h2', { className: 'text-2xl md:text-3xl font-bold mb-6 text-indigo-400' }, "最終反思：人應該如何活？"),
+                            e('div', { className: 'bg-[#0d1326] p-10 md:p-12 rounded-[2rem] border border-indigo-500/40 shadow-2xl relative overflow-hidden fade-in mb-10' },
+                                e('div', { className: 'absolute top-0 right-0 p-8 opacity-5 pointer-events-none' }, 
+                                    e(LucideIcon, { name: 'BookOpen', className: 'w-64 h-64' })
+                                ),
+                                e('h2', { className: 'text-3xl md:text-4xl font-bold mb-8 text-indigo-400 flex items-center gap-4 relative z-10' }, 
+                                    "最終反思：人應該如何活？"
+                                ),
                                 !isSubmitted ? e('div', { className: 'relative z-10' },
-                                    e('p', { className: 'text-slate-300 mb-6' }, "經歷了這場倫理學洗禮，此刻的你認為什麼才是最重要的？"),
-                                    e('textarea', { value: reflection, onChange: (e) => setReflection(e.target.value), className: 'w-full h-32 bg-slate-900/50 border border-slate-700 rounded-2xl p-5 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition-all mb-6 resize-none', placeholder: '寫下你此刻的反思與答案...' }),
+                                    e('p', { className: 'text-xl text-slate-200 mb-8 leading-relaxed' }, "經歷了這場倫理學的洗禮，面對價值的衝突與人性的考驗，此刻的你認為什麼才是最重要的？請留下讀書會最後的反思："),
+                                    e('textarea', { value: reflection, onChange: (e) => setReflection(e.target.value), className: 'w-full h-40 bg-slate-900/60 border border-slate-700/80 rounded-2xl p-6 text-white text-lg placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all mb-8 resize-none', placeholder: '寫下你此刻的反思與答案...' }),
                                     e('div', { className: 'flex justify-end' },
-                                        e('button', { onClick: () => { if(reflection.trim()) setIsSubmitted(true); }, className: `px-10 py-3 rounded-2xl font-bold transition-all ${reflection.trim() ? 'bg-indigo-600 text-white shadow-lg active:scale-95' : 'bg-slate-800 text-slate-500 cursor-not-allowed'}` }, "留下反思")
+                                        e('button', { onClick: () => { if(reflection.trim()) setIsSubmitted(true); }, className: `px-10 py-4 rounded-2xl font-bold text-lg transition-all shadow-lg ${reflection.trim() ? 'bg-indigo-600 hover:bg-indigo-500 text-white hover:scale-[1.02]' : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'}` }, "留下反思")
                                     )
-                                ) : e('div', { className: 'relative z-10 fade-in space-y-6 text-lg text-slate-300' },
-                                    e('div', { className: 'p-6 bg-slate-900/80 rounded-2xl border-l-4 border-indigo-500 italic text-indigo-100' }, `「${reflection}」`),
-                                    e('p', null, "如同林教授所言，倫理學是選擇價值理論的科學。先釐清終點，才能確定路徑。"),
-                                    e('p', { className: 'text-indigo-400 font-bold' }, "願這份思辨讓你未來的抉擇行得比較輕鬆且篤定。")
+                                ) : e('div', { className: 'relative z-10 fade-in space-y-6 text-lg text-slate-300 leading-relaxed' },
+                                    e('div', { className: 'p-8 bg-slate-900/80 rounded-3xl border-l-4 border-indigo-500 shadow-inner my-8' },
+                                        e('p', { className: 'text-2xl text-indigo-100 italic leading-relaxed' }, `「${reflection}」`)
+                                    ),
+                                    e('p', null, "這份文字，記錄了你如何從直覺邁向理性的批判。"),
+                                    e('p', null, "如同林火旺教授所言，倫理學是選擇價值理論的科學。我們必須先了解生命中最重要的價值（終點），才能確定道德判斷的路徑。"),
+                                    e('p', { className: 'text-indigo-300 font-bold mt-4' }, "願這份思辨的種子，讓大家在面對人生無數分岔路時，能行得比較輕鬆且篤定。")
                                 )
                             )
                         )
                     )
                 ) : e(ReadingPage),
                 
-                e('footer', { className: 'mt-10 py-10 text-center text-slate-600 text-xs leading-relaxed border-t border-white/5' },
-                    e('p', null, "本網頁內容延伸自林火旺教授之《倫理學》"),
-                    e('p', null, "網站建置與思辨實驗內容由 Thomas Chien 設計製作"),
-                    e('p', { className: 'mt-2 opacity-50' }, `© ${new Date().getFullYear()} Thomas Chien Portfolio.`)
+                // 頁尾：版權與貢獻聲明
+                e('footer', { className: 'mt-16 pb-8 text-center text-slate-500 text-sm leading-relaxed border-t border-white/5 pt-8 px-6 fade-in' },
+                    e('p', null, "本網站哲學思辨內容延伸自林火旺教授之《倫理學》著作"),
+                    e('p', null, "「經典導讀」由 C. H. Huang 帶領實體讀書會進行探討"),
+                    e('p', null, "「網站架構與建置」、「思想實驗室」互動內容由 Thomas Chien 設計製作"),
+                    e('p', { className: 'mt-4 text-xs opacity-50 tracking-wider font-mono' }, `© ${new Date().getFullYear()} Thomas Chien. All rights reserved.`)
                 )
             );
         }
