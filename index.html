@@ -28,6 +28,8 @@
         
         .fade-in { animation: fadeIn 0.4s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .animate-spin { animation: spin 1s linear infinite; }
         
         /* 導覽列 */
         .nav-btn { position: relative; transition: all 0.3s; padding-bottom: 0.5rem; }
@@ -144,7 +146,7 @@
             "p0 價值理論是哲學的一個分支，主要在研究價值的本質、什麼東西具有價值。價值理論包含道德價值和非道德價值。",
             "h3 一、價值的類別",
             "p1 1. 內在價值(intrinsic value)：本身就是值得人們追求之事物。若滿足「之所以追求a，是為了得到a」時，a就具有內在價值(如快樂)(反過來說，痛苦就具有內在負價值)。",
-            "p1 2. 外在價值(extrinsic value)：可以幫助我們實現最終想要追求之事物。若「之所以追求b，是為了得到a」，則b就具有外外在價值(如出國旅遊、買電視、賺錢等。因為這些最終目的是為了獲得快樂)。",
+            "p1 2. 外在價值(extrinsic value)：可以幫助我們實現最終想要追求之事物。若「之所以追求b，是為了得到a」，則b就具有外在價值(如出國旅遊、買電視、賺錢等。因為這些最終目的是為了獲得快樂)。",
             "h3 二、享樂主義(hedonism)",
             "p0 目標在追求內在價值。",
             "h4 (一)分類：",
@@ -325,15 +327,19 @@
         }
 
         // ==========================================
-        // 互動實驗室 (整合背景音樂版)
+        // 互動實驗室 (包含 AI 反饋)
         // ==========================================
         function App() {
             const [activeTab, setActiveTab] = useState('lab'); 
             const [activeFlow, setActiveFlow] = useState(null);
             const [step, setStep] = useState(0);
             const [selectedChoice, setSelectedChoice] = useState(null);
+            
+            // 反思與 AI 狀態
             const [reflection, setReflection] = useState('');
             const [isSubmitted, setIsSubmitted] = useState(false);
+            const [isLoadingFeedback, setIsLoadingFeedback] = useState(false);
+            const [aiFeedback, setAiFeedback] = useState('');
             
             // 背景音樂控制 State
             const [isPlaying, setIsPlaying] = useState(false);
@@ -344,9 +350,63 @@
                     if (isPlaying) {
                         audioRef.current.pause();
                     } else {
-                        audioRef.current.play().catch(e => console.error("音樂播放被瀏覽器阻擋:", e));
+                        audioRef.current.play().catch(e => console.error("音樂播放被阻擋:", e));
                     }
                     setIsPlaying(!isPlaying);
+                }
+            };
+
+            // 呼叫 Gemini AI API 的功能
+            const fetchAIFeedback = async (userText) => {
+                setIsLoadingFeedback(true);
+                setAiFeedback('');
+                
+                const apiKey = ""; // Canvas 運行環境會自動提供 API 金鑰
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+                const systemPrompt = `你現在是一位充滿智慧、鼓勵思辨的哲學教授，代表著林火旺教授的《倫理學》思維。
+讀書會參與者剛經歷了電車問題、快樂機器等道德難題，並寫下了對於「人應該如何活」的最終反思。
+請用倫理學的視角（如：目的論、義務論、德行論、價值論的客觀/主觀說等）分析他們的反思。
+請遵守以下規則：
+1. 語氣溫和、有學術感且鼓勵對話。
+2. 點出他們的價值觀可能偏向哪種倫理學派別。
+3. 溫和地提出一個哲學詰問或盲點，引導他們做更深層的思考。
+4. 字數精簡，控制在 150 到 250 字之間，必須使用繁體中文。`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: userText }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] }
+                };
+
+                // 指數退避重試機制
+                const fetchWithRetry = async (retries = 5, delay = 1000) => {
+                    try {
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        if (!response.ok) throw new Error('API Error');
+                        const data = await response.json();
+                        return data.candidates?.[0]?.content?.parts?.[0]?.text || "分析完成，但未返回文字。";
+                    } catch (err) {
+                        if (retries > 0) {
+                            await new Promise(res => setTimeout(res, delay));
+                            return fetchWithRetry(retries - 1, delay * 2);
+                        } else {
+                            throw err;
+                        }
+                    }
+                };
+
+                try {
+                    const result = await fetchWithRetry();
+                    setAiFeedback(result);
+                } catch (error) {
+                    console.error(error);
+                    setAiFeedback("林火旺教授的思維引擎暫時無法連線，但請您自行保留這份珍貴的哲學反思。");
+                } finally {
+                    setIsLoadingFeedback(false);
                 }
             };
 
@@ -413,15 +473,12 @@
             const goHome = () => { setActiveFlow(null); setStep(0); setSelectedChoice(null); };
 
             return e('div', { className: 'min-h-screen pb-10 relative' },
-                // === 隱藏的音頻播放器 (播放沉浸式太空氛圍音樂) ===
                 e('audio', { ref: audioRef, src: 'https://cdn.pixabay.com/download/audio/2022/11/22/audio_febc508520.mp3?filename=space-atmospheric-background-124626.mp3', loop: true }),
 
-                // 頂部導覽列 (加入音樂開關按鈕)
                 e('nav', { className: 'sticky top-0 z-50 glass border-b border-white/10 px-6 py-4 flex justify-center items-center gap-6 md:gap-12 shadow-lg backdrop-blur-xl relative' },
                     e('button', { onClick: () => { setActiveTab('lab'); goHome(); window.scrollTo(0,0); }, className: `nav-btn text-base md:text-lg font-bold tracking-widest flex items-center gap-2 ${activeTab === 'lab' ? 'active' : 'text-slate-400 hover:text-slate-200'}` }, e(LucideIcon, {name:'FlaskConical', className:'w-5 h-5'}), "思辨實驗室"),
                     e('button', { onClick: () => { setActiveTab('reading'); window.scrollTo(0,0); }, className: `nav-btn text-base md:text-lg font-bold tracking-widest flex items-center gap-2 ${activeTab === 'reading' ? 'active' : 'text-slate-400 hover:text-slate-200'}` }, e(LucideIcon, {name:'BookOpen', className:'w-5 h-5'}), "經典導讀"),
                     
-                    // 音樂開關按鈕 (放置於導覽列右側)
                     e('button', { 
                         onClick: toggleAudio, 
                         title: isPlaying ? "暫停背景音樂" : "播放背景音樂",
@@ -512,6 +569,8 @@
                                     )
                                 )
                             ),
+                            
+                            // 最終反思與 AI 反饋區塊
                             e('div', { className: 'bg-[#0d1326] p-10 md:p-12 rounded-[2rem] border border-indigo-500/40 shadow-2xl relative overflow-hidden fade-in mb-10' },
                                 e('div', { className: 'absolute top-0 right-0 p-8 opacity-5 pointer-events-none' }, 
                                     e(LucideIcon, { name: 'BookOpen', className: 'w-64 h-64' })
@@ -521,17 +580,40 @@
                                 ),
                                 !isSubmitted ? e('div', { className: 'relative z-10' },
                                     e('p', { className: 'text-xl text-slate-200 mb-8 leading-relaxed' }, "經歷了這場倫理學的洗禮，面對價值的衝突與人性的考驗，此刻的你認為什麼才是最重要的？請留下讀書會最後的反思："),
-                                    e('textarea', { value: reflection, onChange: (e) => setReflection(e.target.value), className: 'w-full h-40 bg-slate-900/60 border border-slate-700/80 rounded-2xl p-6 text-white text-lg placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all mb-8 resize-none', placeholder: '寫下你此刻的反思與答案...' }),
+                                    e('textarea', { value: reflection, onChange: (e) => setReflection(e.target.value), className: 'w-full h-40 bg-slate-900/60 border border-slate-700/80 rounded-2xl p-6 text-white text-lg placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all mb-8 resize-none', placeholder: '寫下你此刻的反思與答案後，點擊『留下反思』按鈕' }),
                                     e('div', { className: 'flex justify-end' },
-                                        e('button', { onClick: () => { if(reflection.trim()) setIsSubmitted(true); }, className: `px-10 py-4 rounded-2xl font-bold text-lg transition-all shadow-lg ${reflection.trim() ? 'bg-indigo-600 hover:bg-indigo-500 text-white hover:scale-[1.02]' : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'}` }, "留下反思")
+                                        e('button', { 
+                                            onClick: () => { 
+                                                if(reflection.trim()) {
+                                                    setIsSubmitted(true); 
+                                                    fetchAIFeedback(reflection); // 觸發 AI 分析
+                                                }
+                                            }, 
+                                            className: `px-10 py-4 rounded-2xl font-bold text-lg transition-all shadow-lg ${reflection.trim() ? 'bg-indigo-600 hover:bg-indigo-500 text-white hover:scale-[1.02]' : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'}` 
+                                        }, "留下反思")
                                     )
                                 ) : e('div', { className: 'relative z-10 fade-in space-y-6 text-lg text-slate-300 leading-relaxed' },
                                     e('div', { className: 'p-8 bg-slate-900/80 rounded-3xl border-l-4 border-indigo-500 shadow-inner my-8' },
                                         e('p', { className: 'text-2xl text-indigo-100 italic leading-relaxed' }, `「${reflection}」`)
                                     ),
-                                    e('p', null, "這份文字，記錄了你如何從直覺邁向理性的批判。"),
-                                    e('p', null, "如同林火旺教授所言，倫理學是選擇價值理論的科學。我們必須先了解生命中最重要的價值（終點），才能確定道德判斷的路徑。"),
-                                    e('p', { className: 'text-indigo-300 font-bold mt-4' }, "願這份思辨的種子，讓大家在面對人生無數分岔路時，能行得比較輕鬆且篤定。")
+                                    
+                                    // AI 分析結果展示區塊
+                                    isLoadingFeedback ? e('div', { className: 'flex items-center gap-3 text-indigo-400 p-6 bg-indigo-900/20 rounded-2xl border border-indigo-500/30' },
+                                        e(LucideIcon, { name: 'Loader2', className: 'w-6 h-6 animate-spin' }),
+                                        e('span', { className: 'animate-pulse font-medium' }, "正在以林火旺教授的倫理學框架進行分析...")
+                                    ) : (
+                                        aiFeedback && e('div', { className: 'p-8 bg-gradient-to-br from-indigo-900/40 to-slate-900/80 rounded-3xl border border-indigo-400/50 shadow-lg fade-in' },
+                                            e('h4', { className: 'text-xl font-bold text-indigo-300 mb-4 flex items-center gap-2' }, 
+                                                e(LucideIcon, { name: 'Sparkles', className: 'w-6 h-6 text-yellow-400' }),
+                                                "來自倫理學視角的反饋"
+                                            ),
+                                            e('p', { className: 'text-slate-200 leading-relaxed text-lg whitespace-pre-line' }, aiFeedback)
+                                        )
+                                    ),
+                                    
+                                    e('div', { className: 'pt-6 mt-6 border-t border-white/5 text-base text-slate-400' },
+                                        e('p', null, "如同林火旺教授所言，倫理學是選擇價值理論的科學。當我們釐清了生命中最重要的價值（終點），才能確定道德判斷的路徑。願這份思辨的種子，讓大家在面對人生分岔路時，能行得比較輕鬆且篤定。")
+                                    )
                                 )
                             )
                         )
