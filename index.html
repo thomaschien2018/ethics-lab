@@ -57,43 +57,43 @@
             const [reflection, setReflection] = useState('');
             const [isSubmitted, setIsSubmitted] = useState(false);
 
-            // 這裡已經換成了強制讀取雲端圖片的 CDN 代理網址
+            // 這裡已經換成了讀取你剛剛上傳的英文檔名圖片！
             const experiments = {
                 trolley: { 
                     title: "電車問題", 
                     icon: "Train", 
                     color: "#f87171", 
-                    img: "https://wsrv.nl/?url=i.meee.com.tw/7DTAcVl.png"
+                    img: "./images/trolley.png"
                 },
                 fatman: { 
                     title: "胖子與天橋", 
                     icon: "Hand", 
                     color: "#fb923c", 
-                    img: "https://wsrv.nl/?url=i.meee.com.tw/pFJEVeg.png"
+                    img: "./images/fatman.png"
                 },
                 transplant: { 
                     title: "器官捐贈", 
                     icon: "Activity", 
                     color: "#f472b6", 
-                    img: "https://wsrv.nl/?url=i.meee.com.tw/z5CWqAB.png"
+                    img: "./images/transplant.png"
                 },
                 machine: { 
                     title: "快樂機器", 
                     icon: "Brain", 
                     color: "#a78bfa", 
-                    img: "https://wsrv.nl/?url=i.meee.com.tw/xlNMHyg.png"
+                    img: "./images/machine.png"
                 },
                 lifeboat: { 
                     title: "救生艇兩難", 
                     icon: "LifeBuoy", 
                     color: "#22d3ee", 
-                    img: "https://wsrv.nl/?url=i.meee.com.tw/mllbgaM.png"
+                    img: "./images/lifeboat.png"
                 },
                 ring: { 
                     title: "蓋吉氏戒指", 
                     icon: "Gem", 
                     color: "#fbbf24", 
-                    img: "https://wsrv.nl/?url=i.meee.com.tw/uUHsDM4.png"
+                    img: "./images/ring.png"
                 }
             };
 
@@ -167,12 +167,12 @@
                     options: [
                         {
                             text: "由我來挑選 (基於年齡、潛力或弱勢)",
-                            feedback: "你承擔起了上帝的角色。你試圖透過某些標準（例如誰更需要、誰對社會更有貢獻）來決定走到這一步的誰有資格活下去。但這也意味著你認定了生命有「高低貴賤」之分。",
+                            feedback: "你承擔起了上帝的角色。你試圖透過某些標準（例如誰更需要、誰對社會更有貢獻）來決定誰有資格活下去。但這也意味著你認定了生命有「高低貴賤」之分。",
                             perspective: { name: "對應理論：社會契約與正義論", desc: "羅爾斯主張在「無知之幕」後做決定：假設你不知道自己是三者中的哪一個，你會希望制定什麼救援規則？通常人們會傾向保護最弱勢的群體。" }
                         },
                         {
                             text: "抽籤決定 (交給機率與運氣)",
-                            feedback: "你拒絕去衡量生命的重量。你認為任何人都沒有資格評判誰的生命更有價值。透過抽籤，你將所有生命放在了絕對平等的基準線上。",
+                            feedback: "你拒去衡量生命的重量。你認為任何人都沒有資格評判誰的生命更有價值。透過抽籤，你將所有生命放在了絕對平等的基準線上。",
                             perspective: { name: "對應理論：生命平權觀點 (Egalitarianism)", desc: "每一條生命都是無價且平等的，不能用「年齡」或「社會貢獻」來量化。在極端情況下，唯一的道德作法是讓機率來決定，維持對所有生命的絕對尊重。" }
                         }
                     ],
